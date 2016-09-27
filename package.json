@@ -1,0 +1,24 @@
+{
+  "name": "centralize",
+  "version": "1.0.0",
+  "description": "Webpage that centralizes all of your notifications for your social media providers in a neat and easy to use space.",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyloJorgensen/centralize-react-capstone.git"
+  },
+  "keywords": [
+    "social",
+    "react",
+    "nodejs"
+  ],
+  "author": "Kylo Jorgensen <kylo.j.jorgensen@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KyloJorgensen/centralize-react-capstone/issues"
+  },
+  "homepage": "https://github.com/KyloJorgensen/centralize-react-capstone#readme"
+}
