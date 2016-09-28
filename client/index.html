@@ -114,7 +114,7 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
     });
-    FB.api('/me/permissions', function(response) {
+    FB.api('/me/notifications', function(response) {
 	  var declined = [];
 	  for (i = 0; i < response.data.length; i++) { 
 	    if (response.data[i].status == 'declined') {
