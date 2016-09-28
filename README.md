@@ -1,1 +1,1 @@
-# centralize-react-capstone
+# food-facts-react-capstone
