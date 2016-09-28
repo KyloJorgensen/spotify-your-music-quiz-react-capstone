@@ -21445,4 +21445,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=centralize.1.0.0.js.map
+//# sourceMappingURL=food-facts.1.0.0.js.map

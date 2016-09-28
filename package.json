@@ -1,5 +1,5 @@
 {
-  "name": "centralize",
+  "name": "food-facts",
   "version": "1.0.0",
   "description": "Webpage that centralizes all of your notifications for your social media providers in a neat and easy to use space.",
   "main": "client/index.js",
