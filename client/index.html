@@ -116,12 +116,13 @@
     });
     FB.api('/me/notifications', function(response) {
 	  var declined = [];
-	  for (i = 0; i < response.data.length; i++) { 
-	    if (response.data[i].status == 'declined') {
-	      declined.push(response.data[i].permission)
-	    }
-	  }
-	  alert(declined.toString())
+	  console.log(response);
+	  // for (i = 0; i < response.data.length; i++) { 
+	  //   if (response.data[i].status == 'declined') {
+	  //     declined.push(response.data[i].permission)
+	  //   }
+	  // }
+	  // alert(declined.toString())
 	});
   }
 </script>
