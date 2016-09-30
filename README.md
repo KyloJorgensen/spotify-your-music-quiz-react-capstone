@@ -1,1 +1,1 @@
-# food-facts-react-capstone
+# spotify-your-music-quiz-react-capstone

@@ -1,7 +1,7 @@
 {
-  "name": "food-facts",
+  "name": "spotify-your-music-quiz",
   "version": "1.0.0",
-  "description": "Webpage that centralizes all of your notifications for your social media providers in a neat and easy to use space.",
+  "description": "Uses your spotify to make a quiz with your music.",
   "main": "client/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -37,7 +37,8 @@
     "url": "git+https://github.com/KyloJorgensen/centralize-react-capstone.git"
   },
   "keywords": [
-    "social",
+    "food",
+    "facts",
     "react",
     "nodejs"
   ],
