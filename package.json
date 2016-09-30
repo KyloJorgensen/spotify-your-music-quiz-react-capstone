@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyloJorgensen/centralize-react-capstone.git"
+    "url": "git+https://github.com/KyloJorgensen/spotify-your-music-quiz-react-capstone.git"
   },
   "keywords": [
     "food",
@@ -45,9 +45,9 @@
   "author": "Kylo Jorgensen <kylo.j.jorgensen@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KyloJorgensen/centralize-react-capstone/issues"
+    "url": "https://github.com/KyloJorgensen/spotify-your-music-quiz-react-capstone/issues"
   },
-  "homepage": "https://github.com/KyloJorgensen/centralize-react-capstone#readme",
+  "homepage": "https://github.com/KyloJorgensen/spotify-your-music-quiz-react-capstone#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
