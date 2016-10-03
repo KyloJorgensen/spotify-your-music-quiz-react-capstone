@@ -6,9 +6,8 @@ var express = require('express'),
 	cookieParser = require('cookie-parser');
 
 module.exports = function(app) {
-    app.set('root', path.join(__dirname , "../.."))
-    	.use(bodyParser.json())   
+    app.use(bodyParser.json())   
     	.use(bodyParser.urlencoded({extended: false}))
    		.use(cookieParser())
-    	.use(express.static(app.get('root') +  'authorization_code/public'));
+    	.use(express.static(path.join(__dirname , '../../build/')));
 };

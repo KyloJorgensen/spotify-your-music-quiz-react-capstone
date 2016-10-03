@@ -14,14 +14,14 @@ module.exports = function(app) {
 		}
 
 		res.status(500);
-
+		console.log(error);
 		if (error) {
 			return res.json(error);
 		} else {
 			return res.json('missing message');
 		}
 
-		next(error)
+		next(error);
 	});
 	app.use(function(error, req, res, next) {
 		console.log('CRITICAL ERROR: ', error);

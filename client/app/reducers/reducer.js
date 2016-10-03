@@ -1,6 +1,6 @@
 'use strict';
 
-var actions = require('./actions');
+var actions = require('../actions/actions');
 
 var initialState = {};
 
