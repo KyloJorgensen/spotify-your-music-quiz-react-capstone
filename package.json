@@ -4,7 +4,7 @@
   "description": "Uses your spotify to make a quiz with your music.",
   "main": "client/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server/server.js",
     "mkdir": "mkdir -p build",
     "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:js",
@@ -37,8 +37,9 @@
     "url": "git+https://github.com/KyloJorgensen/spotify-your-music-quiz-react-capstone.git"
   },
   "keywords": [
-    "food",
-    "facts",
+    "quiz",
+    "games",
+    "music",
     "react",
     "nodejs"
   ],
@@ -50,8 +51,11 @@
   "homepage": "https://github.com/KyloJorgensen/spotify-your-music-quiz-react-capstone#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "mongoose": "^4.6.1"
+    "mongoose": "^4.6.1",
+    "querystring": "^0.2.0",
+    "request": "^2.75.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

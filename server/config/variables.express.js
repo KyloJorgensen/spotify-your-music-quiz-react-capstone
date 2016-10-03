@@ -6,5 +6,9 @@ module.exports = {
     MONGODB: {
         PORT: "",
         URI: process.env.MONGODB_URI || 'mongodb://localhost/centralize'
-    }
+    },
+    SPOTIFY_STATE_KEY: 'spotify_auth_state',
+    SPOTIFY_CLIENT_ID: '52400559933b4fc6b0eacb80c934ab4c',
+	SPOTIFY_CLIENT_SECRET: 'ef65f6574b46456f9a6a54989207e8cd',
+	SPOTIFY_REDIRECT_URI: 'http://localhost:8080/callback/'
 };
