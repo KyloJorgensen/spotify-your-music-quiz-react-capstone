@@ -47,6 +47,12 @@
 	'use strict';
 	
 	var app = __webpack_require__(1);
+	var $ = __webpack_require__(204);
+	
+	$('body').on('click', '#spotify-play', function () {
+		console.log('here');
+		$('iframe').contents().find('#play-button').trigger('click');
+	});
 
 /***/ },
 /* 1 */
@@ -23277,9 +23283,9 @@
 	exports.action = action;
 	exports.ASYNC_ACTION = ASYNC_ACTION;
 	exports.ASYNC_ACTION_SUCCESS = ASYNC_ACTION_SUCCESS;
-	exports.getdataSuccess = getdataSuccess;
+	exports.asyncActionSuccess = asyncActionSuccess;
 	exports.ASYNC_ACTION_ERROR = ASYNC_ACTION_ERROR;
-	exports.getFewestGuessesError = getFewestGuessesError;
+	exports.asyncActionError = asyncActionError;
 
 /***/ },
 /* 204 */
