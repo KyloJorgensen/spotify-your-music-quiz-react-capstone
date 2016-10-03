@@ -9,3 +9,10 @@ addons:
     - mongodb-3.2-precise
     packages:
     - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure: mAKOXRlqosoJ8QAanhgCh/Lrkjl93rvrzXEZqn8DvbGY9QWRvCxapPBMJzPB16WPFCdFC9ZpRgrRnmdBi3As/00X1nnWBTa1TIhyHrKwgkrLyRPrcVgwVEuZbl9naNg8oKax4JooibwAN74QERX6cxxRYCUczzlFomP2gandq/TBGEwdZrhDwuy8IKhkvdeZLT4smEXzA0+5TC0hiR6vb49U8CHuYp1r1PiGk0i8Qp1B6lWlRXbcRv6/pVRTLdg+1VsGYL4jR1ODtL8EOtl6aEnCqB8hvsRMJgZipAt+awUhyUl+mqRu6AT8rE6Bm0pG+wvmaQKtFxy3Txaxzezj7NkxoNH4gTOVBYyzsilXk7p4BXGeRo6Tm4nyQ1ucuZ4W7h111cdb1M7ggnxWqENtqiBcsPWrjd7VaRMIi4ropu2Sq/YiVKA08DVRwSHLmmXB1SNhd5NmVtFatDaUXDmIZefE3UnvHLKRMHx1VdNHSuFd+JLSLQKShmERb30Aefhs11UrNnhtp/xL690/LI2yQoYlH0mYsWknW3gD+TTlErccPDn0zlLxkcpfDFsXkyG9jtJ48L8LkUcjeFytCrt7RgGSyAyjwBKMKUe+myv8D24IfhGajUYAqAdfLn8Gk/GfNL7fkA9aouyM5lU2/JT9vgkwBO/ILBgsJswgm+peTHs=
+  app: spotify-your-music-quiz
+  on:
+    repo: KyloJorgensen/spotify-your-music-quiz-react-capstone
