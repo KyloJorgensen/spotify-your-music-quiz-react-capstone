@@ -1,5 +1,54 @@
-@baker-miller-pink: #FF91AF;
+@spotify-green: #2ebd59;
+@container-width: 60%;
 
 body {
-    background-color: @baker-miller-pink;
+    background-color: black;
+}
+
+.music-quiz {
+	nav {
+		margin: auto;
+		width: @container-width;
+		h1 {
+			color: #ffffff;
+		}
+		> * {
+			display: inline-block;
+		}
+	}
+	.music-quiz-body {
+		background-color: @spotify-green;
+		position: absolute;
+	    top: 80px;
+	    bottom: 35px;
+	    right: 0px;
+	    left: 0px;
+	    > div {
+	    	width: @container-width;
+	    	margin: auto;
+	    }
+	}
+}
+
+.main-page {
+	position: absolute;
+	top: 80px;
+	bottom: 35px;
+}
+
+.current-question-controller > div {
+	display: inline-block;
+	width: 30%;
+	* {
+		width: 50%;
+		margin: auto;
+	}
+}
+
+iframe {
+	  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
 }

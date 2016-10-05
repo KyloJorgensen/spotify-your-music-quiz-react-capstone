@@ -5,14 +5,16 @@ var createStore = redux.createStore;
 var applyMiddleware = redux.applyMiddleware;
 var thunk = require('redux-thunk').default;
 
-var reducer = require('./reducers/reducer');
+var userReducer = require('./reducers/user.reducer');
+var gameReducer = require('./reducers/game.reducer');
 
 var initialState = {};
 
 var reducers = function(state, action) {
     state = state || initialState;
     return {
-        reducer: reducer(state.reducer, action)
+        user: userReducer(state.user, action),
+        game: gameReducer(state.game, action)
     };
 };
 

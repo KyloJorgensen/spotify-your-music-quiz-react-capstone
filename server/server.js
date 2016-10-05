@@ -4,7 +4,6 @@ var express = require('express'),
 	app = express(),
     variables = require('./config/variables.express');
 
-require('./config/mongoose.connection');
 require('./config/config.express')(app);
 require('./config/routes.express')(app);
 require('./middleware/errorHandler')(app);
