@@ -21,15 +21,10 @@ var getUser = function(access_token) {
             return response.json();
         })
         .then(function(data) {
-            return dispatch(
-                getUserSuccess(data)
-            );
+            return dispatch(getUserSuccess(data));
         })
         .catch(function(error) {
-            return dispatch(
-                // getUserError(error)
-                getUserError(error)
-            );
+            return dispatch(getUserError(error));
         });
     }
 };
