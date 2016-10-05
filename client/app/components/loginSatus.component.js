@@ -6,13 +6,13 @@ var loginStatus= function(props) {
     if (props.status) {
         return (
             <div className="login-status">
-                <a href="/">Logout</a>
+                <a className="btn btn-default" href="/">Logout</a>
             </div>
         );
     } else {
         return (
             <div className="login-status">
-                <a href="/login">Log in with Spotify</a>
+                <a className="btn btn-default" href="/login">Log in with Spotify</a>
             </div>
         ); 
     }

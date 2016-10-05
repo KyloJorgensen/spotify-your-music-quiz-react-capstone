@@ -11,9 +11,9 @@ var App = function(props) {
         <div className="music-quiz">
             <nav>
                 <h1>Spotify Misic Quiz</h1>
-                <button><Link to={'/'}>main</Link></button>
-                <button><Link to={'/game'}>game</Link></button>
                 <LoginSatus status={props.access_token}/>
+                <button className="btn btn-default" ><Link to={'/game'}>game</Link></button>
+                <button className="btn btn-default" ><Link to={'/'}>main</Link></button>
             </nav>
             <div className="music-quiz-body">
                 <div>

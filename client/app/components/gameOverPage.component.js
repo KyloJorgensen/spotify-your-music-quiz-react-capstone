@@ -3,9 +3,10 @@
 var React = require('react'),
     connect = require('react-redux').connect,
     actions = require('../actions/gameActions');
+var Link = require('react-router').Link;
 
 var gameOver = React.createClass({
-    onClick: function() {
+    newGame: function() {
         this.props.dispatch(actions.newGame());
     },
     render: function() {
@@ -27,9 +28,10 @@ var gameOver = React.createClass({
         }
         return (
             <div className="game-over">
-                <p>GAME OVER</p>
-                <p>Your Score : {score}/{this.props.tracks.length}</p>
-                <button onClick={this.onClick}>NEW GAME</button>
+                <h3>GAME OVER</h3>
+                <h3>Your Score : {score}/{this.props.tracks.length}</h3>
+                <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
+                <button className="btn btn-default" ><Link to={'/'}>Main Menu</Link></button>
             </div>
         );
     }

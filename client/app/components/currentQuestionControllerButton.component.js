@@ -17,7 +17,7 @@ var CurrentQuestionControllerButton = React.createClass({
 			return (
 		        <div className="current-question-controller-button">
 		        	<div>
-			        	<button onClick={this.onClick} >{this.props.content.value}</button>
+			        	<button className="btn btn-default" onClick={this.onClick} >{this.props.content.value}</button>
 					</div>
 		        </div>
 		    ); 

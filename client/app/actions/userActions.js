@@ -41,7 +41,7 @@ var GET_USER_ERROR = 'GET_USER_ERROR';
 var getUserError = function(error) {
     return {
         type: GET_USER_ERROR,
-        me: error
+        error: error
     };
 };
 

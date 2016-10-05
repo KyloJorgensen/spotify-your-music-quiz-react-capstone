@@ -21,15 +21,15 @@ var gamePage = function(props) {
             props.dispatch(actions.getTracks(null, props.access_token));
             return (
                 <div className="game">
-                    <p>Game</p>
-                    <p>Loading...</p>
+                    <h3>Game</h3>
+                    <h3>Loading...</h3>
                 </div>
             ); 
         } else {
             return (
                 <div className="game">
-                    <p>Game</p>
-                    <a href="/login">Log in with Spotify</a>
+                    <h3>Game</h3>
+                    <a className="btn btn-default" href="/login">Log in with Spotify</a>
                 </div>
             );
         }

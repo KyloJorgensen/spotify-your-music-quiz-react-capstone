@@ -5,11 +5,14 @@ body {
   margin: auto;
   width: 60%;
 }
-.music-quiz nav h1 {
-  color: #ffffff;
-}
 .music-quiz nav > * {
   display: inline-block;
+  float: right;
+  margin: 15px;
+}
+.music-quiz nav h1 {
+  color: #ffffff;
+  float: left;
 }
 .music-quiz .music-quiz-body {
   background-color: #2ebd59;
@@ -24,7 +27,7 @@ body {
   margin: auto;
 }
 .main-page {
-  position: absolute;
+  position: relative;
   top: 80px;
   bottom: 35px;
 }
@@ -35,6 +38,9 @@ body {
 .current-question-controller > div * {
   width: 50%;
   margin: auto;
+}
+.question > button {
+  float: right;
 }
 iframe {
   -webkit-filter: blur(5px);

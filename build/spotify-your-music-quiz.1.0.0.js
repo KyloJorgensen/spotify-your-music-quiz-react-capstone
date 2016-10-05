@@ -23248,7 +23248,7 @@
 	    if (action.type === actions.GET_USER_SUCCESS) {
 	        state.userName = action.me.display_name;
 	    } else if (action.type === actions.GET_USER_ERROR) {
-	        state.me = action.error;
+	        console.log(action.error);
 	    } else if (action.type === actions.LOGIN_USER) {
 	        state.access_token = action.access_token;
 	        state.refresh_token = action.refresh_token;
@@ -23303,7 +23303,7 @@
 	var getUserError = function getUserError(error) {
 	    return {
 	        type: GET_USER_ERROR,
-	        me: error
+	        error: error
 	    };
 	};
 	
@@ -23790,10 +23790,11 @@
 	var gameReducer = function gameReducer(state, action) {
 	    state = state || gameInitialState;
 	    if (action.type === actions.GET_TRACKS_SUCCESS) {
+	        console.log(action);
 	        state.currentQuestion = 1;
 	        state.tracks = action.tracks;
 	    } else if (action.type === actions.GET_TRACKS_ERROR) {
-	        state.tracks = action.tracks;
+	        console.log(action);
 	    } else if (action.type === actions.CHANGE_CURRENT_QUESTION) {
 	        state.currentQuestion = state.currentQuestion + action.value;
 	    } else if (action.type === actions.GAME_OVER) {
@@ -23836,6 +23837,7 @@
 	        }).then(function (response) {
 	            return response.json();
 	        }).then(function (data) {
+	            console.log(data);
 	            return dispatch(allTracks(null, data, url, access_token));
 	        }).catch(function (error) {
 	            return dispatch(allTracks(error));
@@ -23860,12 +23862,9 @@
 	        }
 	
 	        if (data.next == null) {
+	            console.log(storedTracks);
 	            return function (dispatch) {
-	                if (error) {
-	                    return dispatch(getTracksError(error));
-	                } else {
-	                    return dispatch(generateQuiz(storedTracks));
-	                }
+	                return dispatch(generateQuiz(storedTracks));
 	            };
 	        } else {
 	            return function (dispatch) {
@@ -23876,7 +23875,7 @@
 	};
 	
 	var randomNumber = function randomNumber(max) {
-	    return Math.floor(Math.random() * max + 1);
+		return Math.floor(Math.random() * max);
 	};
 	
 	// shuffles an array
@@ -23908,6 +23907,7 @@
 	
 	        track.randomArtists = [];
 	        for (var g = 0; g < 4; g++) {
+	        	console.log({tracks: track})
 	            var randomArtists = tracks[randomNumber(tracks.length)].track.artists;
 	            var wrongArtists = [];
 	            for (var f = 0; f < randomArtists.length; f++) {
@@ -23937,7 +23937,7 @@
 	var getTracksError = function getTracksError(error) {
 	    return {
 	        type: GET_TRACKS_ERROR,
-	        tracks: error
+	        error: error
 	    };
 	};
 	
@@ -24020,25 +24020,25 @@
 	                null,
 	                'Spotify Misic Quiz'
 	            ),
+	            React.createElement(LoginSatus, { status: props.access_token }),
 	            React.createElement(
 	                'button',
-	                null,
-	                React.createElement(
-	                    Link,
-	                    { to: '/' },
-	                    'main'
-	                )
-	            ),
-	            React.createElement(
-	                'button',
-	                null,
+	                { className: 'btn btn-default' },
 	                React.createElement(
 	                    Link,
 	                    { to: '/game' },
 	                    'game'
 	                )
 	            ),
-	            React.createElement(LoginSatus, { status: props.access_token })
+	            React.createElement(
+	                'button',
+	                { className: 'btn btn-default' },
+	                React.createElement(
+	                    Link,
+	                    { to: '/' },
+	                    'main'
+	                )
+	            )
 	        ),
 	        React.createElement(
 	            'div',
@@ -24077,7 +24077,7 @@
 	            { className: 'login-status' },
 	            React.createElement(
 	                'a',
-	                { href: '/' },
+	                { className: 'btn btn-default', href: '/' },
 	                'Logout'
 	            )
 	        );
@@ -24087,7 +24087,7 @@
 	            { className: 'login-status' },
 	            React.createElement(
 	                'a',
-	                { href: '/login' },
+	                { className: 'btn btn-default', href: '/login' },
 	                'Log in with Spotify'
 	            )
 	        );
@@ -29757,49 +29757,59 @@
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
 	    LoginSatus = __webpack_require__(209),
-	    actions = __webpack_require__(203),
+	    userActions = __webpack_require__(203),
+	    gameActions = __webpack_require__(207),
 	    Link = __webpack_require__(210).Link;
 	
-	var mainPage = function mainPage(props) {
-		if (props.access_token) {
-			props.dispatch(actions.getUser(props.access_token));
-		} else {
-			if (props.params.access_token) {
-				props.dispatch(actions.loginUser(props.params.access_token, props.params.refresh_token));
+	var mainPage = React.createClass({
+		displayName: 'mainPage',
+	
+		newGame: function newGame() {
+			this.props.dispatch(gameActions.newGame());
+		},
+		render: function render() {
+			if (this.props.access_token) {
+				this.props.dispatch(userActions.getUser(this.props.access_token));
+			} else {
+				if (this.props.params.access_token) {
+					this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
+				}
+			}
+	
+			if (this.props.userName) {
+				return React.createElement(
+					'div',
+					{ className: 'main-page' },
+					React.createElement(
+						'h3',
+						null,
+						'Hello ',
+						this.props.userName,
+						', choose the game you would like to play.'
+					),
+					React.createElement(
+						'button',
+						{ className: 'btn btn-default', onClick: this.onClick },
+						React.createElement(
+							Link,
+							{ to: '/game' },
+							'5 Question Quiz'
+						)
+					)
+				);
+			} else {
+				return React.createElement(
+					'div',
+					{ className: 'main-page' },
+					React.createElement(
+						'h1',
+						null,
+						'Hello, Welcome to Spotify Your Music Quiz. To play a quiz with your spotify music login to spotify at the top right hand corner.'
+					)
+				);
 			}
 		}
-	
-		if (props.userName) {
-			return React.createElement(
-				'div',
-				{ className: 'main-page' },
-				React.createElement(
-					'p',
-					null,
-					props.userName
-				),
-				React.createElement(
-					'button',
-					null,
-					React.createElement(
-						Link,
-						{ to: '/game' },
-						'game'
-					)
-				)
-			);
-		} else {
-			return React.createElement(
-				'div',
-				{ className: 'main-page' },
-				React.createElement(
-					'p',
-					null,
-					'Hello World'
-				)
-			);
-		}
-	};
+	});
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 		return {
@@ -29837,12 +29847,12 @@
 	                'div',
 	                { className: 'game' },
 	                React.createElement(
-	                    'p',
+	                    'h3',
 	                    null,
 	                    'Game'
 	                ),
 	                React.createElement(
-	                    'p',
+	                    'h3',
 	                    null,
 	                    'Loading...'
 	                )
@@ -29852,13 +29862,13 @@
 	                'div',
 	                { className: 'game' },
 	                React.createElement(
-	                    'p',
+	                    'h3',
 	                    null,
 	                    'Game'
 	                ),
 	                React.createElement(
 	                    'a',
-	                    { href: '/login' },
+	                    { className: 'btn btn-default', href: '/login' },
 	                    'Log in with Spotify'
 	                )
 	            );
@@ -29893,27 +29903,39 @@
 	
 	var currentChoice;
 	
-	var question = function question(props) {
-	    return React.createElement(
-	        'div',
-	        { className: 'question' },
-	        React.createElement(
-	            'p',
-	            null,
-	            'Question ',
-	            props.currentQuestion
-	        ),
-	        React.createElement(
-	            'p',
-	            null,
-	            'Who are the artist\'s of \'',
-	            props.tracks[props.currentQuestion - 1].song,
-	            '\'?'
-	        ),
-	        React.createElement(ChoicesContainer, { choices: props.tracks[props.currentQuestion - 1].randomArtists, currentChoice: props.currentChoice }),
-	        React.createElement(CurrentQuestionController, { currentQuestion: props.currentQuestion, numberOfQuestions: props.tracks.length, currentChoice: props.currentChoice })
-	    );
-	};
+	var question = React.createClass({
+	    displayName: 'question',
+	
+	    newGame: function newGame() {
+	        this.props.dispatch(actions.newGame());
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'question' },
+	            React.createElement(
+	                'h3',
+	                null,
+	                'Question ',
+	                this.props.currentQuestion
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'btn btn-default', onClick: this.newGame },
+	                'NEW GAME'
+	            ),
+	            React.createElement(
+	                'h3',
+	                null,
+	                'Who are the artist\'s of \'',
+	                this.props.tracks[this.props.currentQuestion - 1].song,
+	                '\'?'
+	            ),
+	            React.createElement(ChoicesContainer, { choices: this.props.tracks[this.props.currentQuestion - 1].randomArtists, currentChoice: this.props.currentChoice }),
+	            React.createElement(CurrentQuestionController, { currentQuestion: this.props.currentQuestion, numberOfQuestions: this.props.tracks.length, currentChoice: this.props.currentChoice })
+	        );
+	    }
+	});
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 	    return {
@@ -29987,7 +30009,7 @@
 					{ className: 'choice' },
 					React.createElement(
 						'button',
-						{ onClick: this.onClick, style: selectedStyle },
+						{ className: 'btn btn-default', onClick: this.onClick, style: selectedStyle },
 						choice
 					)
 				);
@@ -29997,7 +30019,7 @@
 					{ className: 'choice' },
 					React.createElement(
 						'button',
-						{ onClick: this.onClick },
+						{ className: 'btn btn-default', onClick: this.onClick },
 						choice
 					)
 				);
@@ -30095,7 +30117,7 @@
 						null,
 						React.createElement(
 							'button',
-							{ onClick: this.onClick },
+							{ className: 'btn btn-default', onClick: this.onClick },
 							this.props.content.value
 						)
 					)
@@ -30123,11 +30145,12 @@
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
 	    actions = __webpack_require__(207);
+	var Link = __webpack_require__(210).Link;
 	
 	var gameOver = React.createClass({
 	    displayName: 'gameOver',
 	
-	    onClick: function onClick() {
+	    newGame: function newGame() {
 	        this.props.dispatch(actions.newGame());
 	    },
 	    render: function render() {
@@ -30151,12 +30174,12 @@
 	            'div',
 	            { className: 'game-over' },
 	            React.createElement(
-	                'p',
+	                'h3',
 	                null,
 	                'GAME OVER'
 	            ),
 	            React.createElement(
-	                'p',
+	                'h3',
 	                null,
 	                'Your Score : ',
 	                score,
@@ -30165,8 +30188,17 @@
 	            ),
 	            React.createElement(
 	                'button',
-	                { onClick: this.onClick },
+	                { className: 'btn btn-default', onClick: this.newGame },
 	                'NEW GAME'
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'btn btn-default' },
+	                React.createElement(
+	                    Link,
+	                    { to: '/' },
+	                    'Main Menu'
+	                )
 	            )
 	        );
 	    }

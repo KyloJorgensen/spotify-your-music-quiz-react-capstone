@@ -24,6 +24,7 @@ var getTracks = function(url, access_token) {
             return response.json();
         })
         .then(function(data) {
+            console.log(data);
             return dispatch(allTracks(null, data, url, access_token));
         })
         .catch(function(error) {
@@ -49,12 +50,9 @@ var allTracks = function(error, data, url, access_token) {
         }
 
         if (data.next == null) {
+            console.log(storedTracks);
             return function(dispatch) {
-                if (error) {
-                    return dispatch(getTracksError(error));
-                } else  {
-                    return dispatch(generateQuiz(storedTracks));
-                }
+                return dispatch(generateQuiz(storedTracks));
             };
         } else {
             return function(dispatch) {
@@ -125,7 +123,7 @@ var GET_TRACKS_ERROR = 'GET_TRACKS_ERROR';
 var getTracksError = function(error) {
     return {
         type: GET_TRACKS_ERROR,
-        tracks: error
+        error: error
     };
 };
 

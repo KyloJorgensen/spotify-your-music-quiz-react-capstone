@@ -9,11 +9,14 @@ body {
 	nav {
 		margin: auto;
 		width: @container-width;
-		h1 {
-			color: #ffffff;
-		}
 		> * {
 			display: inline-block;
+			float: right;
+			margin: 15px;
+		}
+		h1 {
+			color: #ffffff;
+			float: left;
 		}
 	}
 	.music-quiz-body {
@@ -31,7 +34,7 @@ body {
 }
 
 .main-page {
-	position: absolute;
+	position: relative;
 	top: 80px;
 	bottom: 35px;
 }
@@ -42,6 +45,12 @@ body {
 	* {
 		width: 50%;
 		margin: auto;
+	}
+}
+
+.question {
+	> button {
+		float: right;
 	}
 }
 

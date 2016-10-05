@@ -25,13 +25,13 @@ var choice = React.createClass({
 			};
 			return (
 		        <li className="choice" >
-		            <button onClick={this.onClick} style={selectedStyle} >{choice}</button>
+		            <button className="btn btn-default" onClick={this.onClick} style={selectedStyle} >{choice}</button>
 		        </li>
 		    ); 
 		} else {
 			return (
 		        <li className="choice" >
-		            <button onClick={this.onClick} >{choice}</button>
+		            <button className="btn btn-default" onClick={this.onClick} >{choice}</button>
 		        </li>
 		    ); 
 		}
