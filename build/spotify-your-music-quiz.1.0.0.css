@@ -49,4 +49,9 @@ iframe {
   -ms-filter: blur(5px);
   filter: blur(5px);
 }
+@media screen and (max-width: 1140px) {
+  .music-quiz nav {
+    width: 100%;
+  }
+}
 /*# sourceMappingURL=spotify-your-music-quiz.1.0.0.css.map */
