@@ -63,7 +63,7 @@ var allTracks = function(error, data, url, access_token) {
 }
 
 var randomNumber = function(max) {
-    return Math.floor((Math.random() * max) + 1);
+    return Math.floor((Math.random() * max));
 };
 
 // shuffles an array
@@ -104,6 +104,7 @@ var generateQuiz = function(tracks) {
         track.randomArtists.push(track.artists);
         track.randomArtists = shuffle(track.randomArtists);
         track.currentChoice = null;
+        track.songId = randomTrack.id;
         quiz.push(track);
     }
     return function(dispatch) {
@@ -157,6 +158,14 @@ var setChoice = function(choice) {
     }
 };
 
+var SET_SONG_ID = 'SET_SONG_ID';
+var setSongId = function(songId) {
+    return {
+        type: SET_SONG_ID,
+        songId: songId
+    }
+};
+
 exports.getTracks = getTracks;
 exports.GET_TRACKS_SUCCESS = GET_TRACKS_SUCCESS;
 exports.getTracksSuccess = getTracksSuccess;
@@ -170,6 +179,8 @@ exports.NEW_GAME = NEW_GAME;
 exports.newGame = newGame;
 exports.SET_CHOICE = SET_CHOICE;
 exports.setChoice = setChoice;
+exports.SET_SONG_ID = SET_SONG_ID;
+exports.setSongId = setSongId;
 
 // var LOGIN_USER = 'LOGIN_USER';
 // var loginUser = function(access_token, refresh_token) {

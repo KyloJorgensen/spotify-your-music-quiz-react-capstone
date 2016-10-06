@@ -29,7 +29,7 @@ var gamePage = function(props) {
             return (
                 <div className="game">
                     <h3>Game</h3>
-                    <a className="btn btn-default" href="/login">Log in with Spotify</a>
+                    <a className="btn btn-default" href="/login">LOGIN WITH SPOTIFY</a>
                 </div>
             );
         }

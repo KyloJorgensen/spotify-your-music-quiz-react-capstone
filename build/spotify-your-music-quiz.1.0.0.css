@@ -23,6 +23,7 @@ body {
   left: 0px;
 }
 .music-quiz .music-quiz-body > div {
+  background-color: blue;
   width: 60%;
   margin: auto;
 }
@@ -42,12 +43,16 @@ body {
 .question > button {
   float: right;
 }
-iframe {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
+.game-over-body > * {
+  width: 50%;
+  float: left;
+}
+.game-over-body .song-player {
+  float: right;
+  height: 380px;
+}
+.results {
+  font-size: 2rem;
 }
 @media screen and (max-width: 1140px) {
   .music-quiz nav {

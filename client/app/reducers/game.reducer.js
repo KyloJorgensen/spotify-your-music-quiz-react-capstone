@@ -3,7 +3,8 @@
 var actions = require('../actions/gameActions');
 
 var gameInitialState = {
-	currentQuestion: 0
+	currentQuestion: 0,
+    songId: null
 };
 
 var gameReducer = function(state, action) {
@@ -20,8 +21,11 @@ var gameReducer = function(state, action) {
     	state.currentQuestion = "GAME_OVER";
     } else if (action.type === actions.NEW_GAME) {
     	state.currentQuestion = 0;
+        state.songId = null;
     } else if (action.type === actions.SET_CHOICE) {
     	state.tracks[state.currentQuestion-1].currentChoice = action.choice;
+    } else if (action.type === actions.SET_SONG_ID) {
+        state.songId = action.songId;
     }
     return state;
 };

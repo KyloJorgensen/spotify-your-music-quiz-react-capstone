@@ -23784,7 +23784,8 @@
 	var actions = __webpack_require__(207);
 	
 	var gameInitialState = {
-	    currentQuestion: 0
+	    currentQuestion: 0,
+	    songId: null
 	};
 	
 	var gameReducer = function gameReducer(state, action) {
@@ -23801,8 +23802,11 @@
 	        state.currentQuestion = "GAME_OVER";
 	    } else if (action.type === actions.NEW_GAME) {
 	        state.currentQuestion = 0;
+	        state.songId = null;
 	    } else if (action.type === actions.SET_CHOICE) {
 	        state.tracks[state.currentQuestion - 1].currentChoice = action.choice;
+	    } else if (action.type === actions.SET_SONG_ID) {
+	        state.songId = action.songId;
 	    }
 	    return state;
 	};
@@ -23875,7 +23879,7 @@
 	};
 	
 	var randomNumber = function randomNumber(max) {
-		return Math.floor(Math.random() * max);
+	    return Math.floor(Math.random() * max);
 	};
 	
 	// shuffles an array
@@ -23907,7 +23911,6 @@
 	
 	        track.randomArtists = [];
 	        for (var g = 0; g < 4; g++) {
-	        	console.log({tracks: track})
 	            var randomArtists = tracks[randomNumber(tracks.length)].track.artists;
 	            var wrongArtists = [];
 	            for (var f = 0; f < randomArtists.length; f++) {
@@ -23918,6 +23921,7 @@
 	        track.randomArtists.push(track.artists);
 	        track.randomArtists = shuffle(track.randomArtists);
 	        track.currentChoice = null;
+	        track.songId = randomTrack.id;
 	        quiz.push(track);
 	    }
 	    return function (dispatch) {
@@ -23971,6 +23975,14 @@
 	    };
 	};
 	
+	var SET_SONG_ID = 'SET_SONG_ID';
+	var setSongId = function setSongId(songId) {
+	    return {
+	        type: SET_SONG_ID,
+	        songId: songId
+	    };
+	};
+	
 	exports.getTracks = getTracks;
 	exports.GET_TRACKS_SUCCESS = GET_TRACKS_SUCCESS;
 	exports.getTracksSuccess = getTracksSuccess;
@@ -23984,6 +23996,8 @@
 	exports.newGame = newGame;
 	exports.SET_CHOICE = SET_CHOICE;
 	exports.setChoice = setChoice;
+	exports.SET_SONG_ID = SET_SONG_ID;
+	exports.setSongId = setSongId;
 	
 	// var LOGIN_USER = 'LOGIN_USER';
 	// var loginUser = function(access_token, refresh_token) {
@@ -24027,7 +24041,7 @@
 	                React.createElement(
 	                    Link,
 	                    { to: '/game' },
-	                    'game'
+	                    'GAME'
 	                )
 	            ),
 	            React.createElement(
@@ -24036,7 +24050,7 @@
 	                React.createElement(
 	                    Link,
 	                    { to: '/' },
-	                    'main'
+	                    'MAIN MENU'
 	                )
 	            )
 	        ),
@@ -24078,7 +24092,7 @@
 	            React.createElement(
 	                'a',
 	                { className: 'btn btn-default', href: '/' },
-	                'Logout'
+	                'LOGOUT'
 	            )
 	        );
 	    } else {
@@ -24088,7 +24102,7 @@
 	            React.createElement(
 	                'a',
 	                { className: 'btn btn-default', href: '/login' },
-	                'Log in with Spotify'
+	                'LOGIN WITH SPOTIFY'
 	            )
 	        );
 	    }
@@ -29869,7 +29883,7 @@
 	                React.createElement(
 	                    'a',
 	                    { className: 'btn btn-default', href: '/login' },
-	                    'Log in with Spotify'
+	                    'LOGIN WITH SPOTIFY'
 	                )
 	            );
 	        }
@@ -30144,7 +30158,9 @@
 	
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
-	    actions = __webpack_require__(207);
+	    actions = __webpack_require__(207),
+	    ResultContainer = __webpack_require__(281),
+	    SongPlayer = __webpack_require__(283);
 	var Link = __webpack_require__(210).Link;
 	
 	var gameOver = React.createClass({
@@ -30154,59 +30170,171 @@
 	        this.props.dispatch(actions.newGame());
 	    },
 	    render: function render() {
-	        var score = 0;
-	        for (var i = 0; i < this.props.tracks.length; i++) {
-	            var anwser = this.props.tracks[i].artists;
-	            var choice = this.props.tracks[i].currentChoice;
-	            if (anwser.length == choice.length) {
-	                var match = true;
-	                for (var h = 0; h < anwser.length; h++) {
-	                    if (anwser[i] != choice[i]) {
-	                        match = false;
-	                    }
-	                }
-	                if (match) {
-	                    score++;
-	                }
-	            }
-	        }
 	        return React.createElement(
 	            'div',
 	            { className: 'game-over' },
 	            React.createElement(
 	                'h3',
 	                null,
-	                'GAME OVER'
+	                'Great Job!'
 	            ),
 	            React.createElement(
-	                'h3',
-	                null,
-	                'Your Score : ',
-	                score,
-	                '/',
-	                this.props.tracks.length
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'btn btn-default', onClick: this.newGame },
-	                'NEW GAME'
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'btn btn-default' },
+	                'div',
+	                { className: 'game-over-body' },
 	                React.createElement(
-	                    Link,
-	                    { to: '/' },
-	                    'Main Menu'
-	                )
+	                    'div',
+	                    null,
+	                    React.createElement(ResultContainer, { results: this.props.tracks }),
+	                    React.createElement(
+	                        'button',
+	                        { className: 'btn btn-default', onClick: this.newGame },
+	                        'NEW GAME'
+	                    ),
+	                    React.createElement(
+	                        'button',
+	                        { className: 'btn btn-default' },
+	                        React.createElement(
+	                            Link,
+	                            { to: '/' },
+	                            'MAIN MENU'
+	                        )
+	                    )
+	                ),
+	                React.createElement(SongPlayer, { songId: this.props.songId })
 	            )
 	        );
 	    }
 	});
 	
-	var Container = connect()(gameOver);
+	var mapStateToProps = function mapStateToProps(state, props) {
+	    return {
+	        songId: state.game.songId
+	    };
+	};
+	
+	var Container = connect(mapStateToProps)(gameOver);
 	
 	module.exports = Container;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(2);
+	var Result = __webpack_require__(282);
+	
+	var resultConatiner = function resultConatiner(props) {
+	    console.log(props);
+	    var results = [];
+	    var score = 0;
+	    for (var i = 0; i < props.results.length; i++) {
+	        var anwser = props.results[i].artists;
+	        var choice = props.results[i].currentChoice;
+	        var correct = true;
+	        if (anwser.length == choice.length) {
+	            for (var h = 0; h < anwser.length; h++) {
+	                if (anwser[h] != choice[h]) {
+	                    correct = false;
+	                }
+	            }
+	            if (correct) {
+	                score++;
+	            }
+	        }
+	        results.push(React.createElement(Result, { key: i, song: props.results[i].song, anwser: anwser, correct: correct, songId: props.results[i].songId }));
+	    }
+	    return React.createElement(
+	        'div',
+	        { className: 'result-container' },
+	        React.createElement(
+	            'h3',
+	            null,
+	            'Your Score : ',
+	            score,
+	            '/',
+	            props.results.length
+	        ),
+	        React.createElement(
+	            'ol',
+	            { className: 'results' },
+	            results
+	        )
+	    );
+	};
+	
+	module.exports = resultConatiner;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(2),
+	    connect = __webpack_require__(173).connect,
+	    actions = __webpack_require__(207);
+	
+	var songId = '4vvNtCauMI0OzRCwuWkWiF';
+	var result = React.createClass({
+	    displayName: 'result',
+	
+	    onClick: function onClick() {
+	        this.props.dispatch(actions.setSongId(this.props.songId));
+	    },
+	    render: function render() {
+	        var style = {
+	            color: 'red'
+	        };
+	        if (this.props.correct) {
+	            style.color = 'black';
+	        }
+	
+	        return React.createElement(
+	            'li',
+	            { className: 'result' },
+	            React.createElement(
+	                'p',
+	                { style: style, onClick: this.onClick },
+	                this.props.song,
+	                ' by ',
+	                this.props.anwser
+	            )
+	        );
+	    }
+	});
+	
+	var Container = connect()(result);
+	
+	module.exports = Container;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(2);
+	
+	var songPlayer = function songPlayer(props) {
+	    if (props.songId != null) {
+	        var _src = "https://embed.spotify.com/?uri=spotify:track:" + props.songId;
+	        return React.createElement('iframe', { className: 'song-player', src: _src, width: '300', height: '380', frameBorder: '0', allowTransparency: 'true' });
+	    } else {
+	        return React.createElement(
+	            'div',
+	            { className: 'song-player' },
+	            React.createElement(
+	                'h1',
+	                null,
+	                'Click A Song To Display Song Player'
+	            )
+	        );
+	    }
+	};
+	
+	module.exports = songPlayer;
 
 /***/ }
 /******/ ]);
