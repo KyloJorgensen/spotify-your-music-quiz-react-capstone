@@ -18,7 +18,7 @@ var question = React.createClass({
             <div className="question">
                 <h3>Question {this.props.currentQuestion}</h3>
                 <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
-                <h3>Who are the artist's of '{this.props.tracks[this.props.currentQuestion - 1].song}'?</h3>
+                <h3>Who are the artists of '{this.props.tracks[this.props.currentQuestion - 1].song}'?</h3>
                 <ChoicesContainer choices={this.props.tracks[this.props.currentQuestion - 1].randomArtists} currentChoice={this.props.currentChoice} />
                 <CurrentQuestionController currentQuestion={this.props.currentQuestion} numberOfQuestions={this.props.tracks.length} currentChoice={this.props.currentChoice} />
             </div>

@@ -20,18 +20,15 @@ var choice = React.createClass({
 		}
 
 		if (this.props.choice == this.props.currentChoice) {
-			var selectedStyle = {
-				color: 'red'
-			};
 			return (
 		        <li className="choice" >
-		            <button className="btn btn-default" onClick={this.onClick} style={selectedStyle} >{choice}</button>
+		            <p className="btn btn-default choice-current" onClick={this.onClick} >{choice}</p>
 		        </li>
 		    ); 
 		} else {
 			return (
 		        <li className="choice" >
-		            <button className="btn btn-default" onClick={this.onClick} >{choice}</button>
+		            <p className="btn btn-default" onClick={this.onClick} >{choice}</p>
 		        </li>
 		    ); 
 		}

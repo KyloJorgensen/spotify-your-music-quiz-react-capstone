@@ -1,35 +1,68 @@
 @spotify-green: #2ebd59;
+@spotify-blue: #1d283a;
+@spotify-gray: #1b1b1b;
+@spotify-button-blue: #2e2f33;
 @container-width: 60%;
 
 body {
     background-color: black;
 }
 
+h1, h2, h3, h4, h5 {
+	color: @spotify-green;
+}
+
 .music-quiz {
+	.btn {
+		background-color: @spotify-button-blue;
+		color: white;
+		> * {
+			color: white;
+		}
+	}
+	a:hover, .btn:hover, .result > p:hover {
+		color: @spotify-green;
+		text-decoration: none;
+	}
+	a:active {
+		text-decoration: none;
+	}
 	nav {
 		margin: auto;
 		width: @container-width;
 		> * {
 			display: inline-block;
 			float: right;
-			margin: 15px;
+			margin: 32px;
+			color: white;
+			a {
+				color: white;
+			}
 		}
 		h1 {
-			color: #ffffff;
+			margin: 16px;
 			float: left;
 		}
 	}
 	.music-quiz-body {
-		background-color: @spotify-green;
+		background-color: @spotify-blue;
 		position: absolute;
 	    top: 80px;
 	    bottom: 35px;
 	    right: 0px;
 	    left: 0px;
 	    > div {
-	    	background-color: blue;
+	    	background-color: white;
 	    	width: @container-width;
 	    	margin: auto;
+    		position: absolute;
+		    bottom: 0;
+		    top: 0;
+		    left: 0;
+		    right: 0px;
+		    > * {
+		    	padding: 20px;
+		    }
 	    }
 	}
 }
@@ -53,11 +86,15 @@ body {
 	> button {
 		float: right;
 	}
+	.choice-current {
+		color: @spotify-green;
+	}
 }
 
 .game-over-body {
 	> * {
 		width: 50%;
+		padding-left: 10px;
 		float: left;
 	}
 	.song-player {
@@ -68,9 +105,14 @@ body {
 
 .results {
     font-size: 2rem;
-}
-
-iframe {
+    .result {
+    	.correct {
+    		color: @spotify-green;
+    	}
+    	.correct:hover{
+    		color: #01ff4d;
+    	}
+    }
 }
 
 @media screen and (max-width: 1140px) {

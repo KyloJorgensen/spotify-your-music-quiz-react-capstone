@@ -24,7 +24,7 @@ var mainPage = React.createClass({
 			return (
 				<div className="main-page">
 					<h3>Hello {this.props.userName}, choose the game you would like to play.</h3>
-					<button className="btn btn-default" onClick={this.onClick} ><Link to={'/game'}>5 Question Quiz</Link></button>
+					<Link className="btn btn-default" onClick={this.onClick} to={'/game'}>5 Question Quiz</Link>
 				</div>
 			);
 		} else {

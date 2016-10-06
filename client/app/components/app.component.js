@@ -12,8 +12,8 @@ var App = function(props) {
             <nav>
                 <h1>Spotify Misic Quiz</h1>
                 <LoginSatus status={props.access_token}/>
-                <button className="btn btn-default" ><Link to={'/game'}>GAME</Link></button>
-                <button className="btn btn-default" ><Link to={'/'}>MAIN MENU</Link></button>
+                <Link to={'/game'}>GAME</Link>
+                <Link to={'/'}>MAIN MENU</Link>
             </nav>
             <div className="music-quiz-body">
                 <div>

@@ -24036,22 +24036,14 @@
 	            ),
 	            React.createElement(LoginSatus, { status: props.access_token }),
 	            React.createElement(
-	                'button',
-	                { className: 'btn btn-default' },
-	                React.createElement(
-	                    Link,
-	                    { to: '/game' },
-	                    'GAME'
-	                )
+	                Link,
+	                { to: '/game' },
+	                'GAME'
 	            ),
 	            React.createElement(
-	                'button',
-	                { className: 'btn btn-default' },
-	                React.createElement(
-	                    Link,
-	                    { to: '/' },
-	                    'MAIN MENU'
-	                )
+	                Link,
+	                { to: '/' },
+	                'MAIN MENU'
 	            )
 	        ),
 	        React.createElement(
@@ -24087,21 +24079,21 @@
 	var loginStatus = function loginStatus(props) {
 	    if (props.status) {
 	        return React.createElement(
-	            'div',
-	            { className: 'login-status' },
+	            'p',
+	            null,
 	            React.createElement(
 	                'a',
-	                { className: 'btn btn-default', href: '/' },
+	                { href: '/' },
 	                'LOGOUT'
 	            )
 	        );
 	    } else {
 	        return React.createElement(
-	            'div',
-	            { className: 'login-status' },
+	            'p',
+	            null,
 	            React.createElement(
 	                'a',
-	                { className: 'btn btn-default', href: '/login' },
+	                { href: '/login' },
 	                'LOGIN WITH SPOTIFY'
 	            )
 	        );
@@ -29802,13 +29794,9 @@
 						', choose the game you would like to play.'
 					),
 					React.createElement(
-						'button',
-						{ className: 'btn btn-default', onClick: this.onClick },
-						React.createElement(
-							Link,
-							{ to: '/game' },
-							'5 Question Quiz'
-						)
+						Link,
+						{ className: 'btn btn-default', onClick: this.onClick, to: '/game' },
+						'5 Question Quiz'
 					)
 				);
 			} else {
@@ -29853,7 +29841,16 @@
 	    if (props.currentQuestion == "GAME_OVER") {
 	        return React.createElement(GameOver, { tracks: props.tracks });
 	    } else if (props.currentQuestion) {
-	        return React.createElement(Question, null);
+	        return React.createElement(
+	            'div',
+	            { className: 'game' },
+	            React.createElement(
+	                'h1',
+	                null,
+	                '5 Question Quiz'
+	            ),
+	            React.createElement(Question, null)
+	        );
 	    } else {
 	        if (props.access_token) {
 	            props.dispatch(actions.getTracks(null, props.access_token));
@@ -29941,7 +29938,7 @@
 	            React.createElement(
 	                'h3',
 	                null,
-	                'Who are the artist\'s of \'',
+	                'Who are the artists of \'',
 	                this.props.tracks[this.props.currentQuestion - 1].song,
 	                '\'?'
 	            ),
@@ -30015,15 +30012,12 @@
 			}
 	
 			if (this.props.choice == this.props.currentChoice) {
-				var selectedStyle = {
-					color: 'red'
-				};
 				return React.createElement(
 					'li',
 					{ className: 'choice' },
 					React.createElement(
-						'button',
-						{ className: 'btn btn-default', onClick: this.onClick, style: selectedStyle },
+						'p',
+						{ className: 'btn btn-default choice-current', onClick: this.onClick },
 						choice
 					)
 				);
@@ -30032,7 +30026,7 @@
 					'li',
 					{ className: 'choice' },
 					React.createElement(
-						'button',
+						'p',
 						{ className: 'btn btn-default', onClick: this.onClick },
 						choice
 					)
@@ -30284,24 +30278,31 @@
 	        this.props.dispatch(actions.setSongId(this.props.songId));
 	    },
 	    render: function render() {
-	        var style = {
-	            color: 'red'
-	        };
 	        if (this.props.correct) {
-	            style.color = 'black';
+	            return React.createElement(
+	                'li',
+	                { className: 'result' },
+	                React.createElement(
+	                    'p',
+	                    { className: 'song correct', onClick: this.onClick },
+	                    this.props.song,
+	                    ' by ',
+	                    this.props.anwser
+	                )
+	            );
+	        } else {
+	            return React.createElement(
+	                'li',
+	                { className: 'result' },
+	                React.createElement(
+	                    'p',
+	                    { className: 'song', onClick: this.onClick },
+	                    this.props.song,
+	                    ' by ',
+	                    this.props.anwser
+	                )
+	            );
 	        }
-	
-	        return React.createElement(
-	            'li',
-	            { className: 'result' },
-	            React.createElement(
-	                'p',
-	                { style: style, onClick: this.onClick },
-	                this.props.song,
-	                ' by ',
-	                this.props.anwser
-	            )
-	        );
 	    }
 	});
 	

@@ -5,15 +5,11 @@ var React = require('react');
 var loginStatus= function(props) {
     if (props.status) {
         return (
-            <div className="login-status">
-                <a className="btn btn-default" href="/">LOGOUT</a>
-            </div>
+            <p><a href="/">LOGOUT</a></p>
         );
     } else {
         return (
-            <div className="login-status">
-                <a className="btn btn-default" href="/login">LOGIN WITH SPOTIFY</a>
-            </div>
+            <p><a href="/login">LOGIN WITH SPOTIFY</a></p>
         ); 
     }
 };

@@ -14,7 +14,10 @@ var gamePage = function(props) {
         );
     } else if (props.currentQuestion) {
         return (
-            <Question />
+            <div className="game">
+                <h1>5 Question Quiz</h1>
+                <Question />
+            </div>
         );
     } else {
         if (props.access_token) {

@@ -10,18 +10,19 @@ var result = React.createClass({
         this.props.dispatch(actions.setSongId(this.props.songId));
     },
     render: function() {
-        var style = {
-            color: 'red'
-        };
         if (this.props.correct) { 
-            style.color = 'black';
+            return (
+                <li className="result" >
+                    <p className="song correct" onClick={this.onClick} >{this.props.song} by {this.props.anwser}</p>
+                </li>
+            );             
+        } else {
+            return (
+                <li className="result" >
+                    <p className="song" onClick={this.onClick} >{this.props.song} by {this.props.anwser}</p>
+                </li>
+            );             
         }
-
-        return (
-            <li className="result" >
-                <p style={style} onClick={this.onClick} >{this.props.song} by {this.props.anwser}</p>
-            </li>
-        ); 
     }
 });
 
