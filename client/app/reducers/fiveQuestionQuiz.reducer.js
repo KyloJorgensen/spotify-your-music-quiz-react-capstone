@@ -1,14 +1,14 @@
 'use strict';
 
-var actions = require('../actions/gameActions');
+var actions = require('../actions/fiveQuestionQuiz.actions');
 
-var gameInitialState = {
+var fiveQuestionQuizInitialState = {
 	currentQuestion: 0,
     songId: null
 };
 
-var gameReducer = function(state, action) {
-    state = state || gameInitialState;
+var fiveQuestionQuizReducer = function(state, action) {
+    state = state || fiveQuestionQuizInitialState;
     if (action.type === actions.GET_TRACKS_SUCCESS) {
         console.log(action);
     	state.currentQuestion = 1;
@@ -30,4 +30,4 @@ var gameReducer = function(state, action) {
     return state;
 };
 
-module.exports = gameReducer;
+module.exports = fiveQuestionQuizReducer;

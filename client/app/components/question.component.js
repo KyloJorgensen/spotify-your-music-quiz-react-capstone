@@ -1,36 +1,26 @@
 'use strict';
 
-var React = require('react');
-var connect = require('react-redux').connect;
-var actions = require('../actions/gameActions');
-var Link = require('react-router').Link;
-var ChoicesContainer = require('./choicesContainer.component');
-var CurrentQuestionController = require('./currentQuestionController.component');
+var React = require('react'),
+    connect = require('react-redux').connect,
+    ChoicesContainer = require('./choicesContainer.component'),
+    CurrentQuestionController = require('./currentQuestionController.component');
 
-var currentChoice;
-
-var question = React.createClass({
-    newGame: function() {
-        this.props.dispatch(actions.newGame());
-    },
-    render: function() {
-        return (
-            <div className="question">
-                <h3>Question {this.props.currentQuestion}</h3>
-                <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
-                <h3>Who are the artists of '{this.props.tracks[this.props.currentQuestion - 1].song}'?</h3>
-                <ChoicesContainer choices={this.props.tracks[this.props.currentQuestion - 1].randomArtists} currentChoice={this.props.currentChoice} />
-                <CurrentQuestionController currentQuestion={this.props.currentQuestion} numberOfQuestions={this.props.tracks.length} currentChoice={this.props.currentChoice} />
-            </div>
-        ); 
-    }
-});
+var question = function(props) {
+    return (
+        <div className="question">
+            <h3>Question {props.currentQuestion}</h3>
+            <h3>Who are the artists of '{props.tracks[props.currentQuestion - 1].song}'?</h3>
+            <ChoicesContainer choices={props.tracks[props.currentQuestion - 1].randomArtists} currentChoice={props.currentChoice} />
+            <CurrentQuestionController currentQuestion={props.currentQuestion} numberOfQuestions={props.tracks.length} currentChoice={props.currentChoice} />
+        </div>
+    );
+};
 
 var mapStateToProps = function(state, props) {
     return {
-    	tracks: state.game.tracks,
-        currentQuestion: state.game.currentQuestion,
-        currentChoice: state.game.tracks[state.game.currentQuestion -1].currentChoice
+    	tracks: state.fiveQuestionQuiz.tracks,
+        currentQuestion: state.fiveQuestionQuiz.currentQuestion,
+        currentChoice: state.fiveQuestionQuiz.tracks[state.fiveQuestionQuiz.currentQuestion -1].currentChoice
 
     };
 };

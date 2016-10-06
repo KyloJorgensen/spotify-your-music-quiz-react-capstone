@@ -1,22 +1,14 @@
 'use strict';
 
-var React = require('react');
-var connect = require('react-redux').connect;
-var actions = require('../actions/gameActions');
-var Link = require('react-router').Link;
-var Question = require('./question.component');
-var GameOver = require('./gameOverPage.component');
+var React = require('react'),
+    connect = require('react-redux').connect,
+    actions = require('../actions/fiveQuestionQuiz.actions');
 
 var gamePage = function(props) {
-    if (props.currentQuestion == "GAME_OVER") {
-        return (
-            <GameOver tracks={props.tracks} />
-        );
-    } else if (props.currentQuestion) {
+    if (props.currentQuestion) {
         return (
             <div className="game">
-                <h1>5 Question Quiz</h1>
-                <Question />
+                {props.children}
             </div>
         );
     } else {
@@ -43,8 +35,7 @@ var gamePage = function(props) {
 var mapStateToProps = function(state, props) {
     return {
     	access_token: state.user.access_token,
-        tracks: state.game.tracks,
-        currentQuestion: state.game.currentQuestion
+        currentQuestion: state.fiveQuestionQuiz.currentQuestion
     };
 };
 

@@ -61,7 +61,8 @@
 	    App = __webpack_require__(208),
 	    MainPage = __webpack_require__(273),
 	    Game = __webpack_require__(274),
-	    Question = __webpack_require__(275),
+	    GameList = __webpack_require__(285),
+	    FiveQuestionQuiz = __webpack_require__(284),
 	    router = __webpack_require__(210),
 	    Router = router.Router,
 	    Route = router.Route,
@@ -79,8 +80,12 @@
 	            { path: '/', component: App },
 	            React.createElement(IndexRoute, { component: MainPage }),
 	            React.createElement(Route, { path: 'login/:access_token/:refresh_token', component: MainPage }),
-	            React.createElement(Route, { path: 'game', component: Game }),
-	            React.createElement(Route, { path: 'question', components: Question })
+	            React.createElement(
+	                Route,
+	                { path: 'game', component: Game },
+	                React.createElement(IndexRoute, { component: GameList }),
+	                React.createElement(Route, { path: 'five-question-quiz', component: FiveQuestionQuiz })
+	            )
 	        )
 	    )
 	);
@@ -23185,7 +23190,7 @@
 	var thunk = __webpack_require__(201).default;
 	
 	var userReducer = __webpack_require__(202);
-	var gameReducer = __webpack_require__(206);
+	var fiveQuestionQuizReducer = __webpack_require__(286);
 	
 	var initialState = {};
 	
@@ -23193,7 +23198,7 @@
 	    state = state || initialState;
 	    return {
 	        user: userReducer(state.user, action),
-	        game: gameReducer(state.game, action)
+	        fiveQuestionQuiz: fiveQuestionQuizReducer(state.fiveQuestionQuiz, action)
 	    };
 	};
 	
@@ -23776,251 +23781,17 @@
 
 
 /***/ },
-/* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var actions = __webpack_require__(207);
-	
-	var gameInitialState = {
-	    currentQuestion: 0,
-	    songId: null
-	};
-	
-	var gameReducer = function gameReducer(state, action) {
-	    state = state || gameInitialState;
-	    if (action.type === actions.GET_TRACKS_SUCCESS) {
-	        console.log(action);
-	        state.currentQuestion = 1;
-	        state.tracks = action.tracks;
-	    } else if (action.type === actions.GET_TRACKS_ERROR) {
-	        console.log(action);
-	    } else if (action.type === actions.CHANGE_CURRENT_QUESTION) {
-	        state.currentQuestion = state.currentQuestion + action.value;
-	    } else if (action.type === actions.GAME_OVER) {
-	        state.currentQuestion = "GAME_OVER";
-	    } else if (action.type === actions.NEW_GAME) {
-	        state.currentQuestion = 0;
-	        state.songId = null;
-	    } else if (action.type === actions.SET_CHOICE) {
-	        state.tracks[state.currentQuestion - 1].currentChoice = action.choice;
-	    } else if (action.type === actions.SET_SONG_ID) {
-	        state.songId = action.songId;
-	    }
-	    return state;
-	};
-	
-	module.exports = gameReducer;
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	__webpack_require__(204);
-	
-	var getTracks = function getTracks(url, access_token) {
-	    return function (dispatch) {
-	        var _url = 'https://api.spotify.com/v1/me/tracks?offset=0&limit=50';
-	        if (url != null) {
-	            _url = url;
-	        }
-	        return fetch(_url, {
-	            headers: {
-	                'Authorization': 'Bearer ' + access_token
-	            }
-	        }).then(function (response) {
-	            if (response.status < 200 || response.status >= 300) {
-	                var error = new Error(response.statusText);
-	                error.response = response;
-	                throw error;
-	            }
-	            return response;
-	        }).then(function (response) {
-	            return response.json();
-	        }).then(function (data) {
-	            console.log(data);
-	            return dispatch(allTracks(null, data, url, access_token));
-	        }).catch(function (error) {
-	            return dispatch(allTracks(error));
-	        });
-	    };
-	};
-	
-	var storedTracks = [];
-	
-	var allTracks = function allTracks(error, data, url, access_token) {
-	    if (error) {
-	        return function (dispatch) {
-	            return dispatch(getTracksError(error));
-	        };
-	    } else {
-	        if (url == null) {
-	            storedTracks = [];
-	        }
-	
-	        for (var i = 0; i < data.items.length; i++) {
-	            storedTracks.push(data.items[i]);
-	        }
-	
-	        if (data.next == null) {
-	            console.log(storedTracks);
-	            return function (dispatch) {
-	                return dispatch(generateQuiz(storedTracks));
-	            };
-	        } else {
-	            return function (dispatch) {
-	                return dispatch(getTracks(data.next, access_token));
-	            };
-	        }
-	    }
-	};
-	
-	var randomNumber = function randomNumber(max) {
-	    return Math.floor(Math.random() * max);
-	};
-	
-	// shuffles an array
-	function shuffle(array) {
-	    var currentIndex = array.length,
-	        temporaryValue,
-	        randomIndex;
-	    while (0 !== currentIndex) {
-	        randomIndex = Math.floor(Math.random() * currentIndex);
-	        currentIndex -= 1;
-	        temporaryValue = array[currentIndex];
-	        array[currentIndex] = array[randomIndex];
-	        array[randomIndex] = temporaryValue;
-	    }
-	    return array;
-	}
-	
-	var generateQuiz = function generateQuiz(tracks) {
-	    var quiz = [];
-	    for (var i = 0; i < 5; i++) {
-	        var randomTrack = tracks[randomNumber(tracks.length)].track;
-	        var track = {};
-	        track.song = randomTrack.name;
-	
-	        track.artists = [];
-	        for (var h = 0; h < randomTrack.artists.length; h++) {
-	            track.artists.push(randomTrack.artists[h].name);
-	        }
-	
-	        track.randomArtists = [];
-	        for (var g = 0; g < 4; g++) {
-	            var randomArtists = tracks[randomNumber(tracks.length)].track.artists;
-	            var wrongArtists = [];
-	            for (var f = 0; f < randomArtists.length; f++) {
-	                wrongArtists.push(randomArtists[f].name);
-	            }
-	            track.randomArtists.push(wrongArtists);
-	        }
-	        track.randomArtists.push(track.artists);
-	        track.randomArtists = shuffle(track.randomArtists);
-	        track.currentChoice = null;
-	        track.songId = randomTrack.id;
-	        quiz.push(track);
-	    }
-	    return function (dispatch) {
-	        return dispatch(getTracksSuccess(quiz));
-	    };
-	};
-	
-	var GET_TRACKS_SUCCESS = 'GET_TRACKS_SUCCESS';
-	var getTracksSuccess = function getTracksSuccess(tracks) {
-	    return {
-	        type: GET_TRACKS_SUCCESS,
-	        tracks: tracks
-	    };
-	};
-	
-	var GET_TRACKS_ERROR = 'GET_TRACKS_ERROR';
-	var getTracksError = function getTracksError(error) {
-	    return {
-	        type: GET_TRACKS_ERROR,
-	        error: error
-	    };
-	};
-	
-	var CHANGE_CURRENT_QUESTION = 'CHANGE_CURRENT_QUESTION';
-	var changeCurrentQuestion = function changeCurrentQuestion(value) {
-	    return {
-	        type: CHANGE_CURRENT_QUESTION,
-	        value: value
-	    };
-	};
-	
-	var GAME_OVER = 'GAME_OVER';
-	var gameOver = function gameOver() {
-	    return {
-	        type: GAME_OVER
-	    };
-	};
-	
-	var NEW_GAME = 'NEW_GAME';
-	var newGame = function newGame() {
-	    return {
-	        type: NEW_GAME
-	    };
-	};
-	
-	var SET_CHOICE = 'SET_CHOICE';
-	var setChoice = function setChoice(choice) {
-	    return {
-	        type: SET_CHOICE,
-	        choice: choice
-	    };
-	};
-	
-	var SET_SONG_ID = 'SET_SONG_ID';
-	var setSongId = function setSongId(songId) {
-	    return {
-	        type: SET_SONG_ID,
-	        songId: songId
-	    };
-	};
-	
-	exports.getTracks = getTracks;
-	exports.GET_TRACKS_SUCCESS = GET_TRACKS_SUCCESS;
-	exports.getTracksSuccess = getTracksSuccess;
-	exports.GET_TRACKS_ERROR = GET_TRACKS_ERROR;
-	exports.getTracksError = getTracksError;
-	exports.CHANGE_CURRENT_QUESTION = CHANGE_CURRENT_QUESTION;
-	exports.changeCurrentQuestion = changeCurrentQuestion;
-	exports.GAME_OVER = GAME_OVER;
-	exports.gameOver = gameOver;
-	exports.NEW_GAME = NEW_GAME;
-	exports.newGame = newGame;
-	exports.SET_CHOICE = SET_CHOICE;
-	exports.setChoice = setChoice;
-	exports.SET_SONG_ID = SET_SONG_ID;
-	exports.setSongId = setSongId;
-	
-	// var LOGIN_USER = 'LOGIN_USER';
-	// var loginUser = function(access_token, refresh_token) {
-	//     return {
-	//         type: LOGIN_USER,
-	//         access_token: access_token,
-	//         refresh_token: refresh_token
-	//     }
-	// };
-	
-	// exports.LOGIN_USER = LOGIN_USER;
-	// exports.loginUser = loginUser;
-
-/***/ },
+/* 206 */,
+/* 207 */,
 /* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var connect = __webpack_require__(173).connect;
-	var LoginSatus = __webpack_require__(209);
-	var Link = __webpack_require__(210).Link;
+	var React = __webpack_require__(2),
+	    connect = __webpack_require__(173).connect,
+	    LoginSatus = __webpack_require__(209),
+	    Link = __webpack_require__(210).Link;
 	
 	var App = function App(props) {
 	    return React.createElement(
@@ -24038,7 +23809,7 @@
 	            React.createElement(
 	                Link,
 	                { to: '/game' },
-	                'GAME'
+	                'GAMES'
 	            ),
 	            React.createElement(
 	                Link,
@@ -29762,56 +29533,43 @@
 	
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
-	    LoginSatus = __webpack_require__(209),
 	    userActions = __webpack_require__(203),
-	    gameActions = __webpack_require__(207),
-	    Link = __webpack_require__(210).Link;
+	    GameList = __webpack_require__(285);
 	
-	var mainPage = React.createClass({
-		displayName: 'mainPage',
-	
-		newGame: function newGame() {
-			this.props.dispatch(gameActions.newGame());
-		},
-		render: function render() {
-			if (this.props.access_token) {
-				this.props.dispatch(userActions.getUser(this.props.access_token));
-			} else {
-				if (this.props.params.access_token) {
-					this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
-				}
-			}
-	
-			if (this.props.userName) {
-				return React.createElement(
-					'div',
-					{ className: 'main-page' },
-					React.createElement(
-						'h3',
-						null,
-						'Hello ',
-						this.props.userName,
-						', choose the game you would like to play.'
-					),
-					React.createElement(
-						Link,
-						{ className: 'btn btn-default', onClick: this.onClick, to: '/game' },
-						'5 Question Quiz'
-					)
-				);
-			} else {
-				return React.createElement(
-					'div',
-					{ className: 'main-page' },
-					React.createElement(
-						'h1',
-						null,
-						'Hello, Welcome to Spotify Your Music Quiz. To play a quiz with your spotify music login to spotify at the top right hand corner.'
-					)
-				);
+	var mainPage = function mainPage(props) {
+		if (props.access_token) {
+			props.dispatch(userActions.getUser(props.access_token));
+		} else {
+			if (props.params.access_token) {
+				props.dispatch(userActions.loginUser(props.params.access_token, props.params.refresh_token));
 			}
 		}
-	});
+	
+		if (props.userName) {
+			return React.createElement(
+				'div',
+				{ className: 'main-page' },
+				React.createElement(
+					'h3',
+					null,
+					'Hello ',
+					props.userName,
+					', choose the game you would like to play.'
+				),
+				React.createElement(GameList, null)
+			);
+		} else {
+			return React.createElement(
+				'div',
+				{ className: 'main-page' },
+				React.createElement(
+					'h1',
+					null,
+					'Hello, Welcome to Spotify Your Music Quiz. To play a quiz with your spotify music login to spotify at the top right hand corner.'
+				)
+			);
+		}
+	};
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 		return {
@@ -29830,26 +29588,16 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var connect = __webpack_require__(173).connect;
-	var actions = __webpack_require__(207);
-	var Link = __webpack_require__(210).Link;
-	var Question = __webpack_require__(275);
-	var GameOver = __webpack_require__(280);
+	var React = __webpack_require__(2),
+	    connect = __webpack_require__(173).connect,
+	    actions = __webpack_require__(287);
 	
 	var gamePage = function gamePage(props) {
-	    if (props.currentQuestion == "GAME_OVER") {
-	        return React.createElement(GameOver, { tracks: props.tracks });
-	    } else if (props.currentQuestion) {
+	    if (props.currentQuestion) {
 	        return React.createElement(
 	            'div',
 	            { className: 'game' },
-	            React.createElement(
-	                'h1',
-	                null,
-	                '5 Question Quiz'
-	            ),
-	            React.createElement(Question, null)
+	            props.children
 	        );
 	    } else {
 	        if (props.access_token) {
@@ -29890,8 +29638,7 @@
 	var mapStateToProps = function mapStateToProps(state, props) {
 	    return {
 	        access_token: state.user.access_token,
-	        tracks: state.game.tracks,
-	        currentQuestion: state.game.currentQuestion
+	        currentQuestion: state.fiveQuestionQuiz.currentQuestion
 	    };
 	};
 	
@@ -29905,54 +29652,38 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var connect = __webpack_require__(173).connect;
-	var actions = __webpack_require__(207);
-	var Link = __webpack_require__(210).Link;
-	var ChoicesContainer = __webpack_require__(276);
-	var CurrentQuestionController = __webpack_require__(278);
+	var React = __webpack_require__(2),
+	    connect = __webpack_require__(173).connect,
+	    ChoicesContainer = __webpack_require__(276),
+	    CurrentQuestionController = __webpack_require__(278);
 	
-	var currentChoice;
-	
-	var question = React.createClass({
-	    displayName: 'question',
-	
-	    newGame: function newGame() {
-	        this.props.dispatch(actions.newGame());
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'question' },
-	            React.createElement(
-	                'h3',
-	                null,
-	                'Question ',
-	                this.props.currentQuestion
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'btn btn-default', onClick: this.newGame },
-	                'NEW GAME'
-	            ),
-	            React.createElement(
-	                'h3',
-	                null,
-	                'Who are the artists of \'',
-	                this.props.tracks[this.props.currentQuestion - 1].song,
-	                '\'?'
-	            ),
-	            React.createElement(ChoicesContainer, { choices: this.props.tracks[this.props.currentQuestion - 1].randomArtists, currentChoice: this.props.currentChoice }),
-	            React.createElement(CurrentQuestionController, { currentQuestion: this.props.currentQuestion, numberOfQuestions: this.props.tracks.length, currentChoice: this.props.currentChoice })
-	        );
-	    }
-	});
+	var question = function question(props) {
+	    return React.createElement(
+	        'div',
+	        { className: 'question' },
+	        React.createElement(
+	            'h3',
+	            null,
+	            'Question ',
+	            props.currentQuestion
+	        ),
+	        React.createElement(
+	            'h3',
+	            null,
+	            'Who are the artists of \'',
+	            props.tracks[props.currentQuestion - 1].song,
+	            '\'?'
+	        ),
+	        React.createElement(ChoicesContainer, { choices: props.tracks[props.currentQuestion - 1].randomArtists, currentChoice: props.currentChoice }),
+	        React.createElement(CurrentQuestionController, { currentQuestion: props.currentQuestion, numberOfQuestions: props.tracks.length, currentChoice: props.currentChoice })
+	    );
+	};
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 	    return {
-	        tracks: state.game.tracks,
-	        currentQuestion: state.game.currentQuestion,
-	        currentChoice: state.game.tracks[state.game.currentQuestion - 1].currentChoice
+	        tracks: state.fiveQuestionQuiz.tracks,
+	        currentQuestion: state.fiveQuestionQuiz.currentQuestion,
+	        currentChoice: state.fiveQuestionQuiz.tracks[state.fiveQuestionQuiz.currentQuestion - 1].currentChoice
 	
 	    };
 	};
@@ -29967,8 +29698,8 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var Choice = __webpack_require__(277);
+	var React = __webpack_require__(2),
+	    Choice = __webpack_require__(277);
 	
 	var choicesContainer = function choicesContainer(props) {
 	    var choices = [];
@@ -29992,7 +29723,7 @@
 	
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
-	    actions = __webpack_require__(207);
+	    actions = __webpack_require__(287);
 	
 	var choice = React.createClass({
 		displayName: 'choice',
@@ -30045,8 +29776,8 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var CurrentQuestionControllerButton = __webpack_require__(279);
+	var React = __webpack_require__(2),
+	    CurrentQuestionControllerButton = __webpack_require__(279);
 	
 	var currentQuestionController = function currentQuestionController(props) {
 		var pervious = {
@@ -30103,7 +29834,7 @@
 	
 	var React = __webpack_require__(2);
 	var connect = __webpack_require__(173).connect;
-	var actions = __webpack_require__(207);
+	var actions = __webpack_require__(287);
 	
 	var CurrentQuestionControllerButton = React.createClass({
 		displayName: 'CurrentQuestionControllerButton',
@@ -30152,10 +29883,9 @@
 	
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
-	    actions = __webpack_require__(207),
+	    actions = __webpack_require__(287),
 	    ResultContainer = __webpack_require__(281),
 	    SongPlayer = __webpack_require__(283);
-	var Link = __webpack_require__(210).Link;
 	
 	var gameOver = React.createClass({
 	    displayName: 'gameOver',
@@ -30178,21 +29908,7 @@
 	                React.createElement(
 	                    'div',
 	                    null,
-	                    React.createElement(ResultContainer, { results: this.props.tracks }),
-	                    React.createElement(
-	                        'button',
-	                        { className: 'btn btn-default', onClick: this.newGame },
-	                        'NEW GAME'
-	                    ),
-	                    React.createElement(
-	                        'button',
-	                        { className: 'btn btn-default' },
-	                        React.createElement(
-	                            Link,
-	                            { to: '/' },
-	                            'MAIN MENU'
-	                        )
-	                    )
+	                    React.createElement(ResultContainer, { results: this.props.tracks })
 	                ),
 	                React.createElement(SongPlayer, { songId: this.props.songId })
 	            )
@@ -30202,7 +29918,7 @@
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 	    return {
-	        songId: state.game.songId
+	        songId: state.fiveQuestionQuiz.songId
 	    };
 	};
 	
@@ -30216,21 +29932,20 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var Result = __webpack_require__(282);
+	var React = __webpack_require__(2),
+	    Result = __webpack_require__(282);
 	
 	var resultConatiner = function resultConatiner(props) {
-	    console.log(props);
 	    var results = [];
 	    var score = 0;
 	    for (var i = 0; i < props.results.length; i++) {
 	        var anwser = props.results[i].artists;
 	        var choice = props.results[i].currentChoice;
-	        var correct = true;
+	        var correct = false;
 	        if (anwser.length == choice.length) {
 	            for (var h = 0; h < anwser.length; h++) {
-	                if (anwser[h] != choice[h]) {
-	                    correct = false;
+	                if (anwser[h] == choice[h]) {
+	                    correct = true;
 	                }
 	            }
 	            if (correct) {
@@ -30268,9 +29983,8 @@
 	
 	var React = __webpack_require__(2),
 	    connect = __webpack_require__(173).connect,
-	    actions = __webpack_require__(207);
+	    actions = __webpack_require__(287);
 	
-	var songId = '4vvNtCauMI0OzRCwuWkWiF';
 	var result = React.createClass({
 	    displayName: 'result',
 	
@@ -30336,6 +30050,337 @@
 	};
 	
 	module.exports = songPlayer;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(2),
+	    connect = __webpack_require__(173).connect,
+	    actions = __webpack_require__(287),
+	    GameOver = __webpack_require__(280),
+	    Question = __webpack_require__(275);
+	
+	var question = React.createClass({
+	    displayName: 'question',
+	
+	    newGame: function newGame() {
+	        this.props.dispatch(actions.newGame());
+	    },
+	    render: function render() {
+	        if (this.props.currentQuestion == "GAME_OVER") {
+	            return React.createElement(
+	                'div',
+	                { className: 'five-question-quiz' },
+	                React.createElement(
+	                    'h1',
+	                    null,
+	                    '5 Question Quiz'
+	                ),
+	                React.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: this.newGame },
+	                    'NEW GAME'
+	                ),
+	                React.createElement(GameOver, { tracks: this.props.tracks })
+	            );
+	        } else {
+	            return React.createElement(
+	                'div',
+	                { className: 'five-question-quiz' },
+	                React.createElement(
+	                    'h1',
+	                    null,
+	                    '5 Question Quiz'
+	                ),
+	                React.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: this.newGame },
+	                    'NEW GAME'
+	                ),
+	                React.createElement(Question, null)
+	            );
+	        }
+	    }
+	});
+	
+	var mapStateToProps = function mapStateToProps(state, props) {
+	    return {
+	        tracks: state.fiveQuestionQuiz.tracks,
+	        currentQuestion: state.fiveQuestionQuiz.currentQuestion
+	
+	    };
+	};
+	
+	var Container = connect(mapStateToProps)(question);
+	
+	module.exports = Container;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(2),
+	    Link = __webpack_require__(210).Link;
+	
+	var gameList = function gameList() {
+		return React.createElement(
+			'div',
+			{ className: 'game-list' },
+			React.createElement(
+				'h3',
+				null,
+				'Games'
+			),
+			React.createElement(
+				Link,
+				{ className: 'btn btn-default', to: '/game/five-question-quiz' },
+				'5 Question Quiz'
+			)
+		);
+	};
+	
+	module.exports = gameList;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var actions = __webpack_require__(287);
+	
+	var fiveQuestionQuizInitialState = {
+	    currentQuestion: 0,
+	    songId: null
+	};
+	
+	var fiveQuestionQuizReducer = function fiveQuestionQuizReducer(state, action) {
+	    state = state || fiveQuestionQuizInitialState;
+	    if (action.type === actions.GET_TRACKS_SUCCESS) {
+	        console.log(action);
+	        state.currentQuestion = 1;
+	        state.tracks = action.tracks;
+	    } else if (action.type === actions.GET_TRACKS_ERROR) {
+	        console.log(action);
+	    } else if (action.type === actions.CHANGE_CURRENT_QUESTION) {
+	        state.currentQuestion = state.currentQuestion + action.value;
+	    } else if (action.type === actions.GAME_OVER) {
+	        state.currentQuestion = "GAME_OVER";
+	    } else if (action.type === actions.NEW_GAME) {
+	        state.currentQuestion = 0;
+	        state.songId = null;
+	    } else if (action.type === actions.SET_CHOICE) {
+	        state.tracks[state.currentQuestion - 1].currentChoice = action.choice;
+	    } else if (action.type === actions.SET_SONG_ID) {
+	        state.songId = action.songId;
+	    }
+	    return state;
+	};
+	
+	module.exports = fiveQuestionQuizReducer;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	__webpack_require__(204);
+	
+	var getTracks = function getTracks(url, access_token) {
+	    return function (dispatch) {
+	        var _url = 'https://api.spotify.com/v1/me/tracks?offset=0&limit=50';
+	        if (url != null) {
+	            _url = url;
+	        }
+	        return fetch(_url, {
+	            headers: {
+	                'Authorization': 'Bearer ' + access_token
+	            }
+	        }).then(function (response) {
+	            if (response.status < 200 || response.status >= 300) {
+	                var error = new Error(response.statusText);
+	                error.response = response;
+	                throw error;
+	            }
+	            return response;
+	        }).then(function (response) {
+	            return response.json();
+	        }).then(function (data) {
+	            console.log(data);
+	            return dispatch(allTracks(null, data, url, access_token));
+	        }).catch(function (error) {
+	            return dispatch(allTracks(error));
+	        });
+	    };
+	};
+	
+	var storedTracks = [];
+	
+	var allTracks = function allTracks(error, data, url, access_token) {
+	    if (error) {
+	        return function (dispatch) {
+	            return dispatch(getTracksError(error));
+	        };
+	    } else {
+	        if (url == null) {
+	            storedTracks = [];
+	        }
+	
+	        for (var i = 0; i < data.items.length; i++) {
+	            storedTracks.push(data.items[i]);
+	        }
+	
+	        if (data.next == null) {
+	            console.log(storedTracks);
+	            return function (dispatch) {
+	                return dispatch(generateQuiz(storedTracks));
+	            };
+	        } else {
+	            return function (dispatch) {
+	                return dispatch(getTracks(data.next, access_token));
+	            };
+	        }
+	    }
+	};
+	
+	var randomNumber = function randomNumber(max) {
+	    return Math.floor(Math.random() * max);
+	};
+	
+	// shuffles an array
+	function shuffle(array) {
+	    var currentIndex = array.length,
+	        temporaryValue,
+	        randomIndex;
+	    while (0 !== currentIndex) {
+	        randomIndex = Math.floor(Math.random() * currentIndex);
+	        currentIndex -= 1;
+	        temporaryValue = array[currentIndex];
+	        array[currentIndex] = array[randomIndex];
+	        array[randomIndex] = temporaryValue;
+	    }
+	    return array;
+	}
+	
+	var generateQuiz = function generateQuiz(tracks) {
+	    var quiz = [];
+	    for (var i = 0; i < 5; i++) {
+	        var randomTrack = tracks[randomNumber(tracks.length)].track;
+	        var track = {};
+	        track.song = randomTrack.name;
+	
+	        track.artists = [];
+	        for (var h = 0; h < randomTrack.artists.length; h++) {
+	            track.artists.push(randomTrack.artists[h].name);
+	        }
+	
+	        track.randomArtists = [];
+	        for (var g = 0; g < 4; g++) {
+	            var randomArtists = tracks[randomNumber(tracks.length)].track.artists;
+	            var wrongArtists = [];
+	            for (var f = 0; f < randomArtists.length; f++) {
+	                wrongArtists.push(randomArtists[f].name);
+	            }
+	            track.randomArtists.push(wrongArtists);
+	        }
+	        track.randomArtists.push(track.artists);
+	        track.randomArtists = shuffle(track.randomArtists);
+	        track.currentChoice = null;
+	        track.songId = randomTrack.id;
+	        quiz.push(track);
+	    }
+	    return function (dispatch) {
+	        return dispatch(getTracksSuccess(quiz));
+	    };
+	};
+	
+	var GET_TRACKS_SUCCESS = 'GET_TRACKS_SUCCESS';
+	var getTracksSuccess = function getTracksSuccess(tracks) {
+	    return {
+	        type: GET_TRACKS_SUCCESS,
+	        tracks: tracks
+	    };
+	};
+	
+	var GET_TRACKS_ERROR = 'GET_TRACKS_ERROR';
+	var getTracksError = function getTracksError(error) {
+	    return {
+	        type: GET_TRACKS_ERROR,
+	        error: error
+	    };
+	};
+	
+	var CHANGE_CURRENT_QUESTION = 'CHANGE_CURRENT_QUESTION';
+	var changeCurrentQuestion = function changeCurrentQuestion(value) {
+	    return {
+	        type: CHANGE_CURRENT_QUESTION,
+	        value: value
+	    };
+	};
+	
+	var GAME_OVER = 'GAME_OVER';
+	var gameOver = function gameOver() {
+	    return {
+	        type: GAME_OVER
+	    };
+	};
+	
+	var NEW_GAME = 'NEW_GAME';
+	var newGame = function newGame() {
+	    return {
+	        type: NEW_GAME
+	    };
+	};
+	
+	var SET_CHOICE = 'SET_CHOICE';
+	var setChoice = function setChoice(choice) {
+	    return {
+	        type: SET_CHOICE,
+	        choice: choice
+	    };
+	};
+	
+	var SET_SONG_ID = 'SET_SONG_ID';
+	var setSongId = function setSongId(songId) {
+	    return {
+	        type: SET_SONG_ID,
+	        songId: songId
+	    };
+	};
+	
+	exports.getTracks = getTracks;
+	exports.GET_TRACKS_SUCCESS = GET_TRACKS_SUCCESS;
+	exports.getTracksSuccess = getTracksSuccess;
+	exports.GET_TRACKS_ERROR = GET_TRACKS_ERROR;
+	exports.getTracksError = getTracksError;
+	exports.CHANGE_CURRENT_QUESTION = CHANGE_CURRENT_QUESTION;
+	exports.changeCurrentQuestion = changeCurrentQuestion;
+	exports.GAME_OVER = GAME_OVER;
+	exports.gameOver = gameOver;
+	exports.NEW_GAME = NEW_GAME;
+	exports.newGame = newGame;
+	exports.SET_CHOICE = SET_CHOICE;
+	exports.setChoice = setChoice;
+	exports.SET_SONG_ID = SET_SONG_ID;
+	exports.setSongId = setSongId;
+	
+	// var LOGIN_USER = 'LOGIN_USER';
+	// var loginUser = function(access_token, refresh_token) {
+	//     return {
+	//         type: LOGIN_USER,
+	//         access_token: access_token,
+	//         refresh_token: refresh_token
+	//     }
+	// };
+	
+	// exports.LOGIN_USER = LOGIN_USER;
+	// exports.loginUser = loginUser;
 
 /***/ }
 /******/ ]);

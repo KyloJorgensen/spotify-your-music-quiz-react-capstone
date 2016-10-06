@@ -2,10 +2,9 @@
 
 var React = require('react'),
     connect = require('react-redux').connect,
-    actions = require('../actions/gameActions'),
+    actions = require('../actions/fiveQuestionQuiz.actions'),
     ResultContainer = require('./resultContainer.component'),
     SongPlayer = require('./songPlayer.component');
-var Link = require('react-router').Link;
 
 var gameOver = React.createClass({
     newGame: function() {
@@ -18,8 +17,6 @@ var gameOver = React.createClass({
                 <div className="game-over-body">
                     <div>
                         <ResultContainer results={this.props.tracks} />
-                        <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
-                        <button className="btn btn-default" ><Link to={'/'}>MAIN MENU</Link></button>
                     </div>
                     <SongPlayer songId={this.props.songId} />
                 </div>
@@ -30,7 +27,7 @@ var gameOver = React.createClass({
 
 var mapStateToProps = function(state, props) {
     return {
-        songId: state.game.songId
+        songId: state.fiveQuestionQuiz.songId
     };
 };
 

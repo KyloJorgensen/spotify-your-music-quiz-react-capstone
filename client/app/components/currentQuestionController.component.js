@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react');
-var CurrentQuestionControllerButton = require('./currentQuestionControllerButton.component');
+var React = require('react'),
+	CurrentQuestionControllerButton = require('./currentQuestionControllerButton.component');
 
 var currentQuestionController = function(props) {
 	var pervious = {

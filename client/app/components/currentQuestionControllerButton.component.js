@@ -2,7 +2,7 @@
 
 var React = require('react');
 var connect = require('react-redux').connect;
-var actions = require('../actions/gameActions');
+var actions = require('../actions/fiveQuestionQuiz.actions');
 
 var CurrentQuestionControllerButton = React.createClass({
 	onClick: function() {

@@ -1,20 +1,19 @@
 'use strict';
 
-var React = require('react');
-var Result = require('./result.component');
+var React = require('react'),
+    Result = require('./result.component');
 
 var resultConatiner= function(props) {
-    console.log(props);
     var results = [];
     var score = 0;
     for (var i = 0; i < props.results.length; i++) {
         var anwser = props.results[i].artists;
         var choice = props.results[i].currentChoice;
-        var correct = true;
+        var correct = false;
         if (anwser.length == choice.length) {
             for (var h = 0; h < anwser.length; h++) {
-                if (anwser[h] != choice[h]) {
-                    correct = false;
+                if (anwser[h] == choice[h]) {
+                    correct = true;
                 }
             }
             if (correct) {

@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react');
-var Choice = require('./choice.component');
+var React = require('react'),
+	Choice = require('./choice.component');
 
 var choicesContainer = function(props) {
     var choices = [];

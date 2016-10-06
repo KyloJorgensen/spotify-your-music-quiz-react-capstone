@@ -2,9 +2,8 @@
 
 var React = require('react'),
     connect = require('react-redux').connect,
-    actions = require('../actions/gameActions');
+    actions = require('../actions/fiveQuestionQuiz.actions');
 
-var songId = '4vvNtCauMI0OzRCwuWkWiF'; 
 var result = React.createClass({ 
     onClick: function() {
         this.props.dispatch(actions.setSongId(this.props.songId));

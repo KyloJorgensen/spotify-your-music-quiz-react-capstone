@@ -11,6 +11,7 @@ h5 {
 .music-quiz .btn {
   background-color: #2e2f33;
   color: white;
+  padding: 16px;
 }
 .music-quiz .btn > * {
   color: white;
@@ -67,31 +68,54 @@ h5 {
   top: 80px;
   bottom: 35px;
 }
-.current-question-controller > div {
-  display: inline-block;
-  width: 30%;
-}
-.current-question-controller > div * {
-  width: 50%;
-  margin: auto;
-}
 .question > button {
   float: right;
+}
+.question .choices-container {
+  list-style-type: none;
+  padding: 0;
+}
+.question .choices-container .choice p {
+  width: 90%;
+  margin: 5px 5%;
 }
 .question .choice-current {
   color: #2ebd59;
 }
-.game-over-body > * {
+.question .current-question-controller {
+  margin: 0 5%;
+}
+.question .current-question-controller > div {
+  display: inline-block;
+  width: 33.3%;
+}
+.question .current-question-controller > div * {
+  width: 100%;
+  margin: auto;
+}
+.question .current-question-controller > div p {
+  width: initial;
+  text-align: center;
+}
+.five-question-quiz > h1,
+.five-question-quiz button {
+  width: 50%;
+  display: inline-block;
+}
+.five-question-quiz .game-over-body > * {
   width: 50%;
   padding-left: 10px;
   float: left;
 }
-.game-over-body .song-player {
+.five-question-quiz .game-over-body .song-player {
   float: right;
   height: 380px;
 }
+.five-question-quiz .game-over-body .btn {
+  width: 50%;
+}
 .results {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 .results .result .correct {
   color: #2ebd59;

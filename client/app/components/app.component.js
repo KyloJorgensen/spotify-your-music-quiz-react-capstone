@@ -1,9 +1,9 @@
 'use strict';
 
-var React = require('react');
-var connect = require('react-redux').connect;
-var LoginSatus = require('./loginSatus.component');
-var Link = require('react-router').Link;
+var React = require('react'),
+    connect = require('react-redux').connect,
+    LoginSatus = require('./loginSatus.component'),
+    Link = require('react-router').Link;
 
 
 var App = function(props) {
@@ -12,7 +12,7 @@ var App = function(props) {
             <nav>
                 <h1>Spotify Misic Quiz</h1>
                 <LoginSatus status={props.access_token}/>
-                <Link to={'/game'}>GAME</Link>
+                <Link to={'/game'}>GAMES</Link>
                 <Link to={'/'}>MAIN MENU</Link>
             </nav>
             <div className="music-quiz-body">
