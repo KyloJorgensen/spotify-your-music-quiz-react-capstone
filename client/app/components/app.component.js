@@ -10,15 +10,17 @@ var App = function(props) {
     return (
         <div className="music-quiz">
             <nav>
-                <h1>Spotify Misic Quiz</h1>
-                <LoginSatus status={props.access_token}/>
-                <Link to={'/game'}>GAMES</Link>
-                <Link to={'/'}>MAIN MENU</Link>
+                <div>
+                    <h1>Spotify Music Quiz</h1>
+                    <LoginSatus status={props.access_token}/>
+                    <Link to={'/'}>MAIN MENU</Link>
+                </div>
             </nav>
             <div className="music-quiz-body">
                 <div>
                     {props.children}
                 </div>
+                <footer> </footer>
             </div>
         </div>
     );

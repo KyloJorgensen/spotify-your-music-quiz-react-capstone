@@ -7,7 +7,6 @@ var React = require('react'),
     App = require('./components/app.component'),
     MainPage = require('./components/mainPage.component'),
     Game = require('./components/game.component'),
-    GameList = require ('./components/gameList.component'),
     FiveQuestionQuiz = require('./components/fiveQuestionQuiz.component'),
     router = require('react-router'),
     Router = router.Router,
@@ -22,7 +21,7 @@ var routes = (
                 <IndexRoute component={MainPage} />
                 <Route path="login/:access_token/:refresh_token" component={MainPage} />
                 <Route path="game" component={Game} >
-                    <IndexRoute component={GameList} />
+                    <IndexRoute component={MainPage} />
                     <Route path="five-question-quiz" component={FiveQuestionQuiz} />
                 </Route>
             </Route>

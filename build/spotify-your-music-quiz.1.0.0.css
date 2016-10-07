@@ -1,5 +1,5 @@
 body {
-  background-color: black;
+  background-color: #1d283a;
 }
 h1,
 h2,
@@ -26,47 +26,59 @@ h5 {
   text-decoration: none;
 }
 .music-quiz nav {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: black;
+  padding-top: 24px;
+}
+.music-quiz nav div {
   margin: auto;
   width: 60%;
 }
-.music-quiz nav > * {
+.music-quiz nav div > * {
   display: inline-block;
   float: right;
   margin: 32px;
   color: white;
 }
-.music-quiz nav > * a {
+.music-quiz nav div > * a {
   color: white;
 }
-.music-quiz nav h1 {
+.music-quiz nav div h1 {
   margin: 16px;
   float: left;
 }
 .music-quiz .music-quiz-body {
   background-color: #1d283a;
   position: absolute;
-  top: 80px;
-  bottom: 35px;
-  right: 0px;
-  left: 0px;
+  top: 108px;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .music-quiz .music-quiz-body > div {
   background-color: white;
   width: 60%;
   margin: auto;
   position: absolute;
-  bottom: 0;
   top: 0;
+  bottom: 0;
+  right: 0;
   left: 0;
-  right: 0px;
 }
 .music-quiz .music-quiz-body > div > * {
   padding: 20px;
 }
-.main-page {
-  position: relative;
-  top: 80px;
-  bottom: 35px;
+.music-quiz footer {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: black;
+  padding: 16px;
 }
 .question > button {
   float: right;
@@ -110,6 +122,7 @@ h5 {
 .five-question-quiz .game-over-body .song-player {
   float: right;
   height: 380px;
+  background-color: #1d283a;
 }
 .five-question-quiz .game-over-body .btn {
   width: 50%;
@@ -117,8 +130,14 @@ h5 {
 .results {
   font-size: 2.5rem;
 }
+.results .btn {
+  width: 100%;
+}
+.results .result > * {
+  color: red;
+}
 .results .result .correct {
-  color: #2ebd59;
+  color: black;
 }
 .results .result .correct:hover {
   color: #01ff4d;

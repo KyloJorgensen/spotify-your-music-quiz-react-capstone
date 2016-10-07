@@ -80,31 +80,61 @@ function shuffle(array) {
     return array;
 }
 
+var generateRandomArtists = function(tracks, _artists) {
+    var randomArtists;
+    for (randomArtists = [_artists]; randomArtists.length < 5;) {
+        var _tracks = tracks;
+        var randomTrackArtists;
+        while (true) {
+            var _randomNumber = randomNumber(_tracks.length);
+            randomTrackArtists = _tracks[_randomNumber].track.artists;
+            var match = false;
+            for (var i = 0; i < randomArtists.length; i++) {
+                var _randomArtists = randomArtists[i];
+                for (var g = 0; g < randomTrackArtists.length; g++) {
+                    var _randomTrackArtist = randomTrackArtists[g];
+                    for (var h = 0; h < _randomArtists.length; h++) {
+                        console.log(_randomArtists[h], _randomTrackArtist.name);
+                        if (_randomArtists[h] == _randomTrackArtist.name) {
+                            match = true;
+                        }
+                    }
+                }
+            }
+            if (!match) {
+                break;
+            }
+        }
+
+        var wrongArtists = [];
+        for (var f = 0; f < randomTrackArtists.length; f++) {
+            var name = randomTrackArtists[f].name;
+            wrongArtists.push(name); 
+        }
+        randomArtists.push(wrongArtists);
+    }
+    randomArtists = shuffle(randomArtists);
+    console.log(randomArtists);
+    return randomArtists;
+}
+
 var generateQuiz = function(tracks) {
+    var _tracks = tracks;
     var quiz = [];
     for (var i = 0; i < 5; i++) {
-        var randomTrack = tracks[randomNumber(tracks.length)].track;
+        var _randomNumber = randomNumber(_tracks.length);
+        var randomTrack = _tracks[_randomNumber].track;
+        _tracks.splice(_randomNumber, 1);
         var track = {};
         track.song = randomTrack.name;
-
-        track.artists = [];
-        for (var h = 0; h < randomTrack.artists.length; h++) {
-            track.artists.push(randomTrack.artists[h].name)
-        }
-
-        track.randomArtists = [];
-        for (var g = 0; g < 4; g++) {
-            var randomArtists = tracks[randomNumber(tracks.length)].track.artists;
-            var wrongArtists = [];
-            for (var f = 0; f < randomArtists.length; f++) {
-                wrongArtists.push(randomArtists[f].name); 
-            }
-            track.randomArtists.push(wrongArtists);
-        }
-        track.randomArtists.push(track.artists);
-        track.randomArtists = shuffle(track.randomArtists);
         track.currentChoice = null;
         track.songId = randomTrack.id;
+        track.artists = [];
+        for (var h = 0; h < randomTrack.artists.length; h++) {
+            track.artists.push(randomTrack.artists[h].name);
+        }
+        track.randomArtists = generateRandomArtists(_tracks, track.artists);
+
         quiz.push(track);
     }
     return function(dispatch) {

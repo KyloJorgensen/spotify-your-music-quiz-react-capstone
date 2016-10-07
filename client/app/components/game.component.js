@@ -21,12 +21,7 @@ var gamePage = function(props) {
                 </div>
             ); 
         } else {
-            return (
-                <div className="game">
-                    <h3>Game</h3>
-                    <a className="btn btn-default" href="/login">LOGIN WITH SPOTIFY</a>
-                </div>
-            );
+            window.location.href = "/";
         }
     }
 

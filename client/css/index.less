@@ -5,7 +5,7 @@
 @container-width: 60%;
 
 body {
-    background-color: black;
+    background-color: @spotify-blue;
 }
 
 h1, h2, h3, h4, h5 {
@@ -32,50 +32,67 @@ h1, h2, h3, h4, h5 {
 	}
 
 	nav {
-		margin: auto;
-		width: @container-width;
-		> * {
-			display: inline-block;
-			float: right;
-			margin: 32px;
-			color: white;
-			a {
+		position: fixed;
+		right: 0;
+		left: 0;
+		z-index: 9999;
+		background-color: black;
+		padding-top: 24px;
+
+		div {
+			margin: auto;
+			width: @container-width;
+
+			> * {
+				display: inline-block;
+				float: right;
+				margin: 32px;
 				color: white;
+				a {
+					color: white;
+				}
 			}
-		}
-		h1 {
-			margin: 16px;
-			float: left;
+
+			h1 {
+				margin: 16px;
+				float: left;
+			}
 		}
 	}
 
 	.music-quiz-body {
 		background-color: @spotify-blue;
 		position: absolute;
-	    top: 80px;
-	    bottom: 35px;
-	    right: 0px;
-	    left: 0px;
-	    > div {
+    	top: 108px;
+    	bottom: 0;
+	    right: 0;
+	    left: 0;
+		
+		> div {
 	    	background-color: white;
 	    	width: @container-width;
-	    	margin: auto;
-    		position: absolute;
-		    bottom: 0;
+		    margin: auto;
+		    position: absolute;
 		    top: 0;
-		    left: 0;
-		    right: 0px;
+		    bottom: 0;
+	    	right: 0;
+	    	left: 0;
+
 		    > * {
 		    	padding: 20px;
 		    }
 	    }
 	}
-}
 
-.main-page {
-	position: relative;
-	top: 80px;
-	bottom: 35px;
+	footer {
+		position: fixed;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 1;
+		background-color: black;
+		padding: 16px;
+	}
 }
 
 .question {
@@ -130,6 +147,7 @@ h1, h2, h3, h4, h5 {
 		.song-player {
 			float: right;
 			height: 380px;
+			background-color: @spotify-blue;
 		}
 		.btn {
 			width: 50%;
@@ -139,10 +157,18 @@ h1, h2, h3, h4, h5 {
 
 .results {
     font-size: 2.5rem;
-
+	
+	.btn {
+		width: 100%;
+	}
+    
     .result {
+		> * {
+			color: red;
+		}
+
     	.correct {
-    		color: @spotify-green;
+    		color: black;
     	}
     	
     	.correct:hover{
