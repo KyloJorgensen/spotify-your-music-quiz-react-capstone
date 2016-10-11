@@ -10,7 +10,6 @@ var fiveQuestionQuizInitialState = {
 var fiveQuestionQuizReducer = function(state, action) {
     state = state || fiveQuestionQuizInitialState;
     if (action.type === actions.GET_TRACKS_SUCCESS) {
-        console.log(action);
     	state.currentQuestion = 1;
         state.tracks = action.tracks;
     } else if (action.type === actions.GET_TRACKS_ERROR) {

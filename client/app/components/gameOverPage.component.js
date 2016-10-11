@@ -11,14 +11,17 @@ var gameOver = React.createClass({
         this.props.dispatch(actions.newGame());
     },
     render: function() {
+        var id = this.props.songId;
+        if (id == null) {
+            id = this.props.tracks[0].songId;
+        }
         return (
             <div className="game-over">
-                <h3>Great Job!</h3>
                 <div className="game-over-body">
                     <div>
                         <ResultContainer results={this.props.tracks} />
                     </div>
-                    <SongPlayer songId={this.props.songId} />
+                    <SongPlayer songId={id} />
                 </div>
              </div>
         );
@@ -27,7 +30,8 @@ var gameOver = React.createClass({
 
 var mapStateToProps = function(state, props) {
     return {
-        songId: state.fiveQuestionQuiz.songId
+        songId: state.fiveQuestionQuiz.songId,
+        tracks: state.fiveQuestionQuiz.tracks
     };
 };
 

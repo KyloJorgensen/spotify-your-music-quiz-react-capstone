@@ -2,8 +2,7 @@
 
 var React = require('react'),
     connect = require('react-redux').connect,
-    LoginSatus = require('./loginSatus.component'),
-    Link = require('react-router').Link;
+    Menu = require('./menu.component');
 
 
 var App = function(props) {
@@ -12,8 +11,7 @@ var App = function(props) {
             <nav>
                 <div>
                     <h1>Spotify Music Quiz</h1>
-                    <LoginSatus status={props.access_token}/>
-                    <Link to={'/'}>MAIN MENU</Link>
+                    <Menu status={props.access_token} userUrl={props.userUrl} userName={props.userName}/>
                 </div>
             </nav>
             <div className="music-quiz-body">
@@ -28,7 +26,9 @@ var App = function(props) {
 
 var mapStateToProps = function(state, props) {
     return {
-        access_token: state.user.access_token
+        access_token: state.user.access_token,
+        userName: state.user.userName,
+        userUrl: state.user.userUrl
     };
 };
 

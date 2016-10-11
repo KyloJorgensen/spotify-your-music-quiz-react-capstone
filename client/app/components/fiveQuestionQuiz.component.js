@@ -6,34 +6,26 @@ var React = require('react'),
     GameOver = require('./gameOverPage.component'),
     Question = require('./question.component');
 
-var question = React.createClass({
-    newGame: function() {
-        this.props.dispatch(actions.newGame());
-    },
-    render: function() {
-        if (this.props.currentQuestion == "GAME_OVER") {
-            return (
-                <div className="five-question-quiz">
-                    <h1>5 Question Quiz</h1>
-                    <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
-                    <GameOver tracks={this.props.tracks} />
-                </div>
-            );
-        } else {
-            return (
-                <div className="five-question-quiz">
-                    <h1>5 Question Quiz</h1>
-                    <button className="btn btn-default" onClick={this.newGame} >NEW GAME</button>
-                    <Question />
-                </div>
-            );
-        }
+var question = function(props) {
+    if (props.currentQuestion == "GAME_OVER") {
+        return (
+            <div className="five-question-quiz">
+                <h2>5 Question Quiz</h2>
+                <GameOver />
+            </div>
+        );
+    } else {
+        return (
+            <div className="five-question-quiz">
+                <h2>5 Question Quiz</h2>
+                <Question />
+            </div>
+        );
     }
-});
+};
 
 var mapStateToProps = function(state, props) {
     return {
-    	tracks: state.fiveQuestionQuiz.tracks,
         currentQuestion: state.fiveQuestionQuiz.currentQuestion
 
     };

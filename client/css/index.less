@@ -1,67 +1,116 @@
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro';
+
 @spotify-green: #2ebd59;
 @spotify-blue: #1d283a;
 @spotify-gray: #1b1b1b;
-@spotify-button-blue: #2e2f33;
+@spotify-button-blue: #282828;
 @container-width: 60%;
+@black: #333333;
+@orange: #ff6816;
 
 body {
-    background-color: @spotify-blue;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
-	color: @spotify-green;
+	text-align: center;
+    text-transform: uppercase;
+    color: @black;
+    letter-spacing: 1px;
 }
 
+h1 {
+	font-size: large;
+}
+
+h2 {
+	font-size: 2.8em;
+}
+
+p {
+	font-size: 12pt;
+    font-weight: 400;
+    text-align: center;
+    color: rgba(0,0,0,0.5);
+}
+
+ul, ol {
+	list-style-type: none;
+}
+
+a:hover, .btn:hover {
+	color: white;
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+	color: white;
+}
+
+a {
+	color: white;
+}
+
+
 .music-quiz {
-	.btn {
-		background-color: @spotify-button-blue;
-		color: white;
-		padding: 16px;
-		> * {
-			color: white;
-		}
-	}
-
-	a:hover, .btn:hover, .result > p:hover {
-		color: @spotify-green;
-		text-decoration: none;
-	}
-
-	a:active {
-		text-decoration: none;
+	.btn-default {
+		display: inline-block;
+	    margin-top: 2em;
+	    padding: 1em 2em 1em 2em;
+	    background: #ff6816;
+	    border-radius: 8px;
+	    letter-spacing: 0.20em;
+	    line-height: 1.8em;
+	    text-decoration: none;
+	    text-transform: uppercase;
+	    font-weight: 400;
+	    font-size: 1.2em;
+	    color: #FFF;
 	}
 
 	nav {
+		padding: 15px 0;
 		position: fixed;
 		right: 0;
 		left: 0;
 		z-index: 9999;
-		background-color: black;
-		padding-top: 24px;
+		background-color: @black;
 
 		div {
 			margin: auto;
 			width: @container-width;
 
-			> * {
+			.menu {
 				display: inline-block;
 				float: right;
-				margin: 32px;
-				color: white;
+				> * {
+					float: right;
+				}
+
 				a {
-					color: white;
+					margin-right: 32px;
+				}
+
+				.menu-img {
+				    margin-right: 5px;
+				    height: 32px;
+				    border-radius: 50%;
 				}
 			}
 
 			h1 {
-				margin: 16px;
 				float: left;
+				text-transform: uppercase;
+			    font-weight: bold;
+			    font-size: large;
+			    color: white;
+			    margin: 0;
 			}
 		}
 	}
 
 	.music-quiz-body {
-		background-color: @spotify-blue;
 		position: absolute;
     	top: 108px;
     	bottom: 0;
@@ -81,6 +130,22 @@ h1, h2, h3, h4, h5 {
 		    > * {
 		    	padding: 20px;
 		    }
+
+		    .main-page {
+		    	h1 {
+		    		text-align: center;
+				    text-transform: uppercase;
+				    font-size: large;
+				    color: @black;
+				    letter-spacing: 1px;
+		    	}
+		    	.game-list {
+		    		a {
+		    			display: block;
+		    			margin: auto;
+		    		}
+		    	}
+		    }
 	    }
 	}
 
@@ -90,7 +155,7 @@ h1, h2, h3, h4, h5 {
 		left: 0;
 		bottom: 0;
 		z-index: 1;
-		background-color: black;
+		background-color: @black;
 		padding: 16px;
 	}
 }
@@ -105,14 +170,14 @@ h1, h2, h3, h4, h5 {
 		padding: 0;
 		.choice {
 			p {
-				width: 90%;
-    			margin: 5px 5%;
+				width: 60%;
+    			margin: 5px 20%;
 			}
 		}
 	}
 
 	.choice-current {
-		color: @spotify-green;
+		color: @black;
 	}
 
 	.current-question-controller {
@@ -132,50 +197,39 @@ h1, h2, h3, h4, h5 {
 	}
 }
 
-.five-question-quiz {
-	> h1, button {
-		width: 50%;
-	 	display: inline-block;
-	}
-
-	.game-over-body {
-		> * {
-			width: 50%;
-			padding-left: 10px;
-			float: left;
-		}
-		.song-player {
-			float: right;
-			height: 380px;
-			background-color: @spotify-blue;
-		}
-		.btn {
-			width: 50%;
-		}
-	}
-}
-
 .results {
-    font-size: 2.5rem;
-	
-	.btn {
-		width: 100%;
-	}
-    
-    .result {
-		> * {
-			color: red;
-		}
-
-    	.correct {
-    		color: black;
-    	}
-    	
-    	.correct:hover{
-    		color: #01ff4d;
-    	}
-    }
+	padding: 0;
 }
+
+.song {
+  	font-size: 2.5rem;
+  	color: @black;
+  	display: block;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.song:hover {
+  	color: @orange;
+}
+
+.song-player {
+	margin: auto;
+  	display: block;
+	background-color: @black;
+}
+
+.btn {
+	width: 50%;
+}
+
+
+
+.result-img {
+	display: inline;
+	height: 2.5rem;
+}
+
 
 @media screen and (max-width: 1140px) {
 	.music-quiz {

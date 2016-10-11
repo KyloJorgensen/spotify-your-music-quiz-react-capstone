@@ -12,13 +12,13 @@ var result = React.createClass({
         if (this.props.correct) { 
             return (
                 <li className="result" >
-                    <p className="song correct" onClick={this.onClick} >{this.props.song} by {this.props.anwser}</p>
+                    <a className="song correct" onClick={this.onClick} ><img className="result-img" src="images/1476229776_Tick_Mark_Dark.png" /> {this.props.song} by {this.props.anwser}</a>
                 </li>
             );             
         } else {
             return (
                 <li className="result" >
-                    <p className="song" onClick={this.onClick} >{this.props.song} by {this.props.anwser}</p>
+                    <a className="song" onClick={this.onClick} ><img className="result-img" src="images/1476229862_Close_Icon_Dark.png" /> {this.props.song} by {this.props.anwser}</a>
                 </li>
             );             
         }

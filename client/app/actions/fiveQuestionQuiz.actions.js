@@ -24,7 +24,6 @@ var getTracks = function(url, access_token) {
             return response.json();
         })
         .then(function(data) {
-            console.log(data);
             return dispatch(allTracks(null, data, url, access_token));
         })
         .catch(function(error) {
@@ -50,7 +49,6 @@ var allTracks = function(error, data, url, access_token) {
         }
 
         if (data.next == null) {
-            console.log(storedTracks);
             return function(dispatch) {
                 return dispatch(generateQuiz(storedTracks));
             };
@@ -94,7 +92,6 @@ var generateRandomArtists = function(tracks, _artists) {
                 for (var g = 0; g < randomTrackArtists.length; g++) {
                     var _randomTrackArtist = randomTrackArtists[g];
                     for (var h = 0; h < _randomArtists.length; h++) {
-                        console.log(_randomArtists[h], _randomTrackArtist.name);
                         if (_randomArtists[h] == _randomTrackArtist.name) {
                             match = true;
                         }
@@ -114,7 +111,6 @@ var generateRandomArtists = function(tracks, _artists) {
         randomArtists.push(wrongArtists);
     }
     randomArtists = shuffle(randomArtists);
-    console.log(randomArtists);
     return randomArtists;
 }
 

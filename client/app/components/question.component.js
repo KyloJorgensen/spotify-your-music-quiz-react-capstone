@@ -8,8 +8,8 @@ var React = require('react'),
 var question = function(props) {
     return (
         <div className="question">
-            <h3>Question {props.currentQuestion}</h3>
-            <h3>Who are the artists of '{props.tracks[props.currentQuestion - 1].song}'?</h3>
+            <h1>Question {props.currentQuestion}</h1>
+            <h1>Who are the artists of '{props.tracks[props.currentQuestion - 1].song}'?</h1>
             <ChoicesContainer choices={props.tracks[props.currentQuestion - 1].randomArtists} currentChoice={props.currentChoice} />
             <CurrentQuestionController currentQuestion={props.currentQuestion} numberOfQuestions={props.tracks.length} currentChoice={props.currentChoice} />
         </div>

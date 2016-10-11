@@ -24,10 +24,10 @@ var resultConatiner= function(props) {
     }
     return (
         <div className="result-container" >
-            <h3>Your Score : {score}/{props.results.length}</h3>
-            <ol className="results">
+            <h3>Great Job! Score : {score}/{props.results.length}</h3>
+            <ul className="results">
                 {results}
-            </ol>
+            </ul>
         </div>
     ); 
 };
