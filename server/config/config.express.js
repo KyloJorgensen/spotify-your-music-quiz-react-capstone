@@ -10,5 +10,4 @@ module.exports = function(app) {
     	.use(bodyParser.urlencoded({extended: false}))
    		.use(cookieParser())
     	.use(express.static(path.join(__dirname , '../../build/')));
-    	.use(express.static(path.join(__dirname , '../../images/')));
 };
