@@ -19,6 +19,7 @@ var fiveQuestionQuizReducer = function(state, action) {
     } else if (action.type === actions.GAME_OVER) {
     	state.currentQuestion = "GAME_OVER";
     } else if (action.type === actions.NEW_GAME) {
+        console.log(action);
     	state.currentQuestion = 0;
         state.songId = null;
     } else if (action.type === actions.SET_CHOICE) {

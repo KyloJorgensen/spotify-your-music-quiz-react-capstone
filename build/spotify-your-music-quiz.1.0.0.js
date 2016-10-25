@@ -23262,21 +23262,23 @@
 	var actions = __webpack_require__(204);
 	
 	var userInitialState = {
-	    loginSatus: false,
 	    access_token: false,
-	    refresh_token: false
+	    refresh_token: false,
+	    userName: false,
+	    userUrl: false
 	};
 	
 	var userReducer = function userReducer(state, action) {
 	    state = state || userInitialState;
 	    if (action.type === actions.GET_USER_SUCCESS) {
-	        state.userName = action.me.display_name;
+	        state.userName = action.me.display_name || action.me.id;
 	        state.userUrl = action.me.external_urls.spotify;
 	    } else if (action.type === actions.GET_USER_ERROR) {
 	        console.log(action.error);
 	    } else if (action.type === actions.LOGIN_USER) {
 	        state.access_token = action.access_token;
 	        state.refresh_token = action.refresh_token;
+	        state.userName = false;
 	    }
 	
 	    return state;
@@ -23825,6 +23827,7 @@
 	    } else if (action.type === actions.GAME_OVER) {
 	        state.currentQuestion = "GAME_OVER";
 	    } else if (action.type === actions.NEW_GAME) {
+	        console.log(action);
 	        state.currentQuestion = 0;
 	        state.songId = null;
 	    } else if (action.type === actions.SET_CHOICE) {
@@ -29836,17 +29839,14 @@
 		displayName: 'mainPage',
 	
 		componentWillMount: function componentWillMount() {
-			this.props.dispatch(gameActions.newGame());
+			if (this.props.params.access_token) {
+				this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
+			}
 		},
 		render: function render() {
 			if (this.props.access_token) {
 				this.props.dispatch(userActions.getUser(this.props.access_token));
-			} else {
-				if (this.props.params.access_token) {
-					this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
-				}
 			}
-	
 			if (this.props.userName) {
 				return React.createElement(
 					'div',

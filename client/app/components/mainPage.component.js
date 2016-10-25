@@ -8,17 +8,14 @@ var React = require('react'),
 
 var mainPage = React.createClass({
 	componentWillMount: function() {
-		this.props.dispatch(gameActions.newGame());
+		if (this.props.params.access_token) {
+			this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
+		}
 	},
 	render: function() {
 		if (this.props.access_token) {
 			this.props.dispatch(userActions.getUser(this.props.access_token))
-		} else {
-			if (this.props.params.access_token) {
-				this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
-			}	
 		}
-		
 		if (this.props.userName) {
 			return (
 				<div className="main-page">

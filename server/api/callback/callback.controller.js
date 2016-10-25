@@ -43,7 +43,7 @@ CallbackController.prototype.getCallback = function(req, res, next) {
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#/login/'+ access_token + '/' + refresh_token);
       } else {
-        res.redirect('/#' +
+        res.redirect('/#/' +
           querystring.stringify({
             error: 'invalid_token'
           }));
