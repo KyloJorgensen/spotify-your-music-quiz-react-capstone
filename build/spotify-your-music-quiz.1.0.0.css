@@ -40,6 +40,9 @@ a:active {
 a {
   color: white;
 }
+.container {
+  margin: auto;
+}
 .music-quiz .btn-default {
   display: inline-block;
   margin-top: 2em;
@@ -61,10 +64,6 @@ a {
   left: 0;
   z-index: 9999;
   background-color: #333333;
-}
-.music-quiz nav div {
-  margin: auto;
-  width: 60%;
 }
 .music-quiz nav div .menu {
   display: inline-block;
@@ -98,8 +97,6 @@ a {
 }
 .music-quiz .music-quiz-body > div {
   background-color: white;
-  width: 60%;
-  margin: auto;
   position: absolute;
   top: 0;
   bottom: 0;

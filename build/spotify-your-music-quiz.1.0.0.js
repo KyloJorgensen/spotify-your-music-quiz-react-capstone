@@ -24101,7 +24101,7 @@
 	            null,
 	            React.createElement(
 	                'div',
-	                null,
+	                { className: 'container' },
 	                React.createElement(
 	                    'h1',
 	                    null,
@@ -24115,7 +24115,7 @@
 	            { className: 'music-quiz-body' },
 	            React.createElement(
 	                'div',
-	                null,
+	                { className: 'container' },
 	                props.children
 	            ),
 	            React.createElement(

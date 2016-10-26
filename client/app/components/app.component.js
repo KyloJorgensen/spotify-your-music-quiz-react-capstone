@@ -9,13 +9,13 @@ var App = function(props) {
     return (
         <div className="music-quiz">
             <nav>
-                <div>
+                <div className="container">
                     <h1>Spotify Music Quiz</h1>
                     <Menu status={props.access_token} userUrl={props.userUrl} userName={props.userName}/>
                 </div>
             </nav>
             <div className="music-quiz-body">
-                <div>
+                <div className="container">
                     {props.children}
                 </div>
                 <footer> </footer>
