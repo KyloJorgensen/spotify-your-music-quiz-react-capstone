@@ -1,7 +1,8 @@
 # spotify-your-music-quiz-react-capstone
 SUMMARY
 
-    Spofity Music Quiz is an app that uses music from you Spotify account to make a quiz to test your knowledge of your music. a user logs in to spofity or signs up with spotify then it uses the music they have to generate the quiz.
+    Spofity Music Quiz is an app that uses music from you Spotify account to make a quiz to test your knowledge of your
+    music. a user logs in to spofity or signs up with spotify then it uses the music they have to generate the quiz.
 
 TECHNOLOGY
     
