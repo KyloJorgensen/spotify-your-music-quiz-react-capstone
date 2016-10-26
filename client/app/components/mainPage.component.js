@@ -12,6 +12,9 @@ var mainPage = React.createClass({
 			this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
 		}
 	},
+	componentDidMount: function() {
+		this.props.dispatch(gameActions.newGame());
+	},
 	render: function() {
 		if (this.props.access_token) {
 			this.props.dispatch(userActions.getUser(this.props.access_token))
@@ -27,6 +30,7 @@ var mainPage = React.createClass({
 			return (
 		        <div className="main-page">
 		            <h1>Hello, Welcome to Spotify Music Quiz.</h1>
+		            <p>To play signup or login with your Spotify account.</p>
 		        </div>
 		    );
 		}

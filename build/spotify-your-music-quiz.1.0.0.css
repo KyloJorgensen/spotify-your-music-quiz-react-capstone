@@ -129,6 +129,9 @@ a {
   background-color: #333333;
   padding: 16px;
 }
+.five-question-quiz {
+  padding-bottom: 50px;
+}
 .question > button {
   float: right;
 }
@@ -174,6 +177,7 @@ a {
 .song-player {
   margin: auto;
   display: block;
+  width: 50%;
   background-color: #333333;
 }
 .btn {

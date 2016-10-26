@@ -43,7 +43,18 @@ var allTracks = function(error, data, url, access_token) {
         if (url == null) {
             storedTracks = [];
         }
-
+        if (!'items' in data) {
+            var error = new Error('no tracks');
+            return function(dispatch) {
+                return dispatch(getTracksError(error));
+            };
+        }
+        if (data.items.length == 0) {
+            var error = new Error('no tracks');
+            return function(dispatch) {
+                return dispatch(getTracksError(error));
+            };
+        }
         for (var i = 0; i < data.items.length; i++) {
             storedTracks.push(data.items[i]);
         }
@@ -83,6 +94,8 @@ var generateRandomArtists = function(tracks, _artists) {
     for (randomArtists = [_artists]; randomArtists.length < 5;) {
         var _tracks = tracks;
         var randomTrackArtists;
+        var stopnumber = 100;
+        var _number = 0;
         while (true) {
             var _randomNumber = randomNumber(_tracks.length);
             randomTrackArtists = _tracks[_randomNumber].track.artists;
@@ -100,7 +113,10 @@ var generateRandomArtists = function(tracks, _artists) {
             }
             if (!match) {
                 break;
+            } else if (_number == stopnumber) {
+                break;                
             }
+            _number++;
         }
 
         var wrongArtists = [];

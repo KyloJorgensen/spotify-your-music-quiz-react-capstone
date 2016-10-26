@@ -23812,7 +23812,8 @@
 	
 	var fiveQuestionQuizInitialState = {
 	    currentQuestion: 0,
-	    songId: null
+	    songId: null,
+	    tracks: null
 	};
 	
 	var fiveQuestionQuizReducer = function fiveQuestionQuizReducer(state, action) {
@@ -23821,13 +23822,14 @@
 	        state.currentQuestion = 1;
 	        state.tracks = action.tracks;
 	    } else if (action.type === actions.GET_TRACKS_ERROR) {
-	        console.log(action);
+	        if (action.error.message = "to tracks") {
+	            alert("you have no music on you spoifty the game will not work. sorry");
+	        }
 	    } else if (action.type === actions.CHANGE_CURRENT_QUESTION) {
 	        state.currentQuestion = state.currentQuestion + action.value;
 	    } else if (action.type === actions.GAME_OVER) {
 	        state.currentQuestion = "GAME_OVER";
 	    } else if (action.type === actions.NEW_GAME) {
-	        console.log(action);
 	        state.currentQuestion = 0;
 	        state.songId = null;
 	    } else if (action.type === actions.SET_CHOICE) {
@@ -23886,7 +23888,18 @@
 	        if (url == null) {
 	            storedTracks = [];
 	        }
-	
+	        if (!'items' in data) {
+	            var error = new Error('no tracks');
+	            return function (dispatch) {
+	                return dispatch(getTracksError(error));
+	            };
+	        }
+	        if (data.items.length == 0) {
+	            var error = new Error('no tracks');
+	            return function (dispatch) {
+	                return dispatch(getTracksError(error));
+	            };
+	        }
 	        for (var i = 0; i < data.items.length; i++) {
 	            storedTracks.push(data.items[i]);
 	        }
@@ -23927,6 +23940,8 @@
 	    for (randomArtists = [_artists]; randomArtists.length < 5;) {
 	        var _tracks = tracks;
 	        var randomTrackArtists;
+	        var stopnumber = 100;
+	        var _number = 0;
 	        while (true) {
 	            var _randomNumber = randomNumber(_tracks.length);
 	            randomTrackArtists = _tracks[_randomNumber].track.artists;
@@ -23944,7 +23959,10 @@
 	            }
 	            if (!match) {
 	                break;
+	            } else if (_number == stopnumber) {
+	                break;
 	            }
+	            _number++;
 	        }
 	
 	        var wrongArtists = [];
@@ -29843,6 +29861,9 @@
 				this.props.dispatch(userActions.loginUser(this.props.params.access_token, this.props.params.refresh_token));
 			}
 		},
+		componentDidMount: function componentDidMount() {
+			this.props.dispatch(gameActions.newGame());
+		},
 		render: function render() {
 			if (this.props.access_token) {
 				this.props.dispatch(userActions.getUser(this.props.access_token));
@@ -29867,6 +29888,11 @@
 						'h1',
 						null,
 						'Hello, Welcome to Spotify Music Quiz.'
+					),
+					React.createElement(
+						'p',
+						null,
+						'To play signup or login with your Spotify account.'
 					)
 				);
 			}
@@ -30045,6 +30071,11 @@
 	                    'div',
 	                    null,
 	                    React.createElement(ResultContainer, { results: this.props.tracks })
+	                ),
+	                React.createElement(
+	                    'p',
+	                    null,
+	                    'Click on title to change the song. Then click play to listen.'
 	                ),
 	                React.createElement(SongPlayer, { songId: id })
 	            )

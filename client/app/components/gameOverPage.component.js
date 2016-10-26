@@ -21,6 +21,7 @@ var gameOver = React.createClass({
                     <div>
                         <ResultContainer results={this.props.tracks} />
                     </div>
+                    <p>Click on title to change the song. Then click play to listen.</p>
                     <SongPlayer songId={id} />
                 </div>
              </div>

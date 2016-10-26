@@ -24,7 +24,6 @@ var gamePage = function(props) {
             window.location.href = "/";
         }
     }
-
 };
 
 var mapStateToProps = function(state, props) {
