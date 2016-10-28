@@ -5,42 +5,20 @@ Spofity Music Quiz is an app that uses music from you Spotify account to make a 
 # DEMO
 This is an active demo of website hosted by a server. [https://spotify-your-music-quiz.herokuapp.com/](https://spotify-your-music-quiz.herokuapp.com/)
 
-TECHNOLOGY
-    
-     Spotify API
 
-    "dependencies": {
-      "body-parser": "^1.15.2",
-      "cookie-parser": "^1.4.3",
-      "express": "^4.14.0",
-      "querystring": "^0.2.0",
-      "request": "^2.75.0"
-    },
-    "devDependencies": {
-      "babel": "^6.5.2",
-      "babel-cli": "^6.14.0",
-      "babel-core": "^6.14.0",
-      "babel-loader": "^6.2.5",
-      "babel-preset-es2015": "^6.14.0",
-      "babel-preset-react": "^6.11.1",
-      "babel-register": "^6.16.3",
-      "chai": "^3.5.0",
-      "chai-http": "^3.0.0",
-      "chokidar-cli": "^1.2.0",
-      "isomorphic-fetch": "^2.2.1",
-      "less": "^2.7.1",
-      "less-plugin-clean-css": "^1.5.1",
-      "mocha": "^3.0.2",
-      "react": "^15.3.2",
-      "react-addons-test-utils": "^15.3.1",
-      "react-dom": "^15.3.1",
-      "react-redux": "^4.4.5",
-      "react-router": "^2.8.1",
-      "redux": "^3.6.0",
-      "redux-thunk": "^2.1.0",
-      "uglify-js": "^2.7.3",
-      "webpack": "^1.13.2"
-    }
+# TECHNOLOGIES USED
+
+The front-end is built using React, the back-end using NodeJS with ExpressJS as the web server and MongoDB as the database.
+
+Java script file is full of Javascript libaraies called modules that are complied to one file with Webpack and Node package Manager. 
+
+Uses the Spotify API to get Authentication keys for music and user info. [Spotify API](https://developer.spotify.com/web-api/)
+
+Backend is Test with mocha, chai and travis ci. [Click here to see test results](https://travis-ci.org/KyloJorgensen/spotify-your-music-quiz-react-capstone)
+
+## Modules:
+    
+babel, babel-cli, babel-core, babel-loader, babel-preset-es2015, babel-preset-react, babel-register, body-parser, chai, chai-http, chokidar-cli, cookie-parser, express, isomorphic-fetch, less, less-plugin-clean-css, mocha, querystring, react, react-addons-test-utils, react-dom, react-redux, react-router, redux, redux-thunk, request, uglify-js, and webpack.
 
 SCREENSHOTS
 
