@@ -20,7 +20,7 @@ Backend is Test with mocha, chai and travis ci. [Click here to see test results]
     
 babel, babel-cli, babel-core, babel-loader, babel-preset-es2015, babel-preset-react, babel-register, body-parser, chai, chai-http, chokidar-cli, cookie-parser, express, isomorphic-fetch, less, less-plugin-clean-css, mocha, querystring, react, react-addons-test-utils, react-dom, react-redux, react-router, redux, redux-thunk, request, uglify-js, and webpack.
 
-## SCREENSHOTS
+# SCREENSHOTS
 
 ![Screenshots](https://raw.githubusercontent.com/KyloJorgensen/spotify-your-music-quiz-react-capstone/master/screenshots/Screen%20Shot%202016-10-26%20at%2010.04.47%20AM.png)
 ![Screenshots](https://raw.githubusercontent.com/KyloJorgensen/spotify-your-music-quiz-react-capstone/master/screenshots/Screen%20Shot%202016-10-26%20at%2010.05.01%20AM.png)
