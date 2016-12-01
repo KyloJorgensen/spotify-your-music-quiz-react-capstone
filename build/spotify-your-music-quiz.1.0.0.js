@@ -23877,6 +23877,33 @@
 	    };
 	};
 	
+	var getGuestTracks = function getGuestTracks(url) {
+	    return function (dispatch) {
+	
+	        var chars = 'abcdefghijklmnopqrstuvwxyz';
+	
+	        var _url = 'https://api.spotify.com/v1/search?q=' + chars[Math.floor(Math.random() * chars.length)] + '&type=track';
+	
+	        if (url != null) {
+	            _url = url;
+	        }
+	        return fetch(_url).then(function (response) {
+	            if (response.status < 200 || response.status >= 300) {
+	                var error = new Error(response.statusText);
+	                error.response = response;
+	                throw error;
+	            }
+	            return response;
+	        }).then(function (response) {
+	            return response.json();
+	        }).then(function (data) {
+	            return dispatch(allGuestTracks(null, data.tracks, url));
+	        }).catch(function (error) {
+	            return dispatch(allGuestTracks(error));
+	        });
+	    };
+	};
+	
 	var storedTracks = [];
 	
 	var allTracks = function allTracks(error, data, url, access_token) {
@@ -23916,6 +23943,47 @@
 	    }
 	};
 	
+	var allGuestTracks = function allGuestTracks(error, data, url) {
+	    if (error) {
+	        return function (dispatch) {
+	            return dispatch(getTracksError(error));
+	        };
+	    } else {
+	        if (url == null) {
+	            storedTracks = [];
+	        }
+	        if (!'items' in data) {
+	            var error = new Error('no tracks');
+	            return function (dispatch) {
+	                return dispatch(getTracksError(error));
+	            };
+	        }
+	        if (data.items.length == 0) {
+	            var error = new Error('no tracks');
+	            return function (dispatch) {
+	                return dispatch(getTracksError(error));
+	            };
+	        }
+	        for (var i = 0; i < data.items.length; i++) {
+	            storedTracks.push(data.items[i]);
+	        }
+	
+	        if (data.next == null) {
+	            return function (dispatch) {
+	                return dispatch(generateQuiz(storedTracks));
+	            };
+	        } else if (storedTracks.length >= 100) {
+	            return function (dispatch) {
+	                return dispatch(generateQuiz(storedTracks));
+	            };
+	        } else {
+	            return function (dispatch) {
+	                return dispatch(getGuestTracks(data.next));
+	            };
+	        }
+	    }
+	};
+	
 	var randomNumber = function randomNumber(max) {
 	    return Math.floor(Math.random() * max);
 	};
@@ -23944,7 +24012,11 @@
 	        var _number = 0;
 	        while (true) {
 	            var _randomNumber = randomNumber(_tracks.length);
-	            randomTrackArtists = _tracks[_randomNumber].track.artists;
+	            if ('track' in _tracks) {
+	                randomTrackArtists = _tracks[_randomNumber].track.artists;
+	            } else {
+	                randomTrackArtists = _tracks[_randomNumber].artists;
+	            }
 	            var match = false;
 	            for (var i = 0; i < randomArtists.length; i++) {
 	                var _randomArtists = randomArtists[i];
@@ -23982,6 +24054,9 @@
 	    for (var i = 0; i < 5; i++) {
 	        var _randomNumber = randomNumber(_tracks.length);
 	        var randomTrack = _tracks[_randomNumber].track;
+	        if (randomTrack == undefined) {
+	            randomTrack = _tracks[_randomNumber];
+	        }
 	        _tracks.splice(_randomNumber, 1);
 	        var track = {};
 	        track.song = randomTrack.name;
@@ -24059,6 +24134,7 @@
 	exports.getTracksSuccess = getTracksSuccess;
 	exports.GET_TRACKS_ERROR = GET_TRACKS_ERROR;
 	exports.getTracksError = getTracksError;
+	exports.getGuestTracks = getGuestTracks;
 	exports.CHANGE_CURRENT_QUESTION = CHANGE_CURRENT_QUESTION;
 	exports.changeCurrentQuestion = changeCurrentQuestion;
 	exports.GAME_OVER = GAME_OVER;
@@ -29892,8 +29968,9 @@
 					React.createElement(
 						'p',
 						null,
-						'To play signup or login with your Spotify account.'
-					)
+						'To play signup or login with your Spotify account to use your music.'
+					),
+					React.createElement(GameList, null)
 				);
 			}
 		}
@@ -29973,7 +30050,21 @@
 	                )
 	            );
 	        } else {
-	            window.location.href = "/";
+	            props.dispatch(actions.getGuestTracks());
+	            return React.createElement(
+	                'div',
+	                { className: 'game' },
+	                React.createElement(
+	                    'h3',
+	                    null,
+	                    'Game'
+	                ),
+	                React.createElement(
+	                    'h3',
+	                    null,
+	                    'Loading...'
+	                )
+	            );
 	        }
 	    }
 	};

@@ -30,7 +30,8 @@ var mainPage = React.createClass({
 			return (
 		        <div className="main-page">
 		            <h1>Hello, Welcome to Spotify Music Quiz.</h1>
-		            <p>To play signup or login with your Spotify account.</p>
+		            <p>To play signup or login with your Spotify account to use your music.</p>
+					<GameList />
 		        </div>
 		    );
 		}

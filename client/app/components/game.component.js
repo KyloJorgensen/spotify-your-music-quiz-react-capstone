@@ -21,7 +21,13 @@ var gamePage = function(props) {
                 </div>
             ); 
         } else {
-            window.location.href = "/";
+            props.dispatch(actions.getGuestTracks());
+            return (
+                <div className="game">
+                    <h3>Game</h3>
+                    <h3>Loading...</h3>
+                </div>
+            );
         }
     }
 };
