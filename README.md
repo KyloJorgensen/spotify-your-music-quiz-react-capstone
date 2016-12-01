@@ -10,11 +10,11 @@ This is an active demo of website hosted by a server. [https://spotify-your-musi
 
 The front-end is built using React, the back-end using NodeJS with ExpressJS as the web server and MongoDB as the database.
 
-Java script file is full of Javascript libaraies called modules that are complied to one file with Webpack and Node package Manager. 
+Javascript file is full of Javascript libraries called modules that are complied to one file with Webpack and Node package Manager. 
 
 Uses the Spotify API to get Authentication keys for music and user info. [Spotify API](https://developer.spotify.com/web-api/)
 
-Backend is Test with mocha, chai and travis ci. [Click here to see test results](https://travis-ci.org/KyloJorgensen/spotify-your-music-quiz-react-capstone)
+Backend is Test with Mocha, Chai and Travic CI. [Click here to see test results](https://travis-ci.org/KyloJorgensen/spotify-your-music-quiz-react-capstone)
 
 ## Modules:
     
