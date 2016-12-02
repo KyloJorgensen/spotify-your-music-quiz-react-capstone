@@ -5,7 +5,7 @@ var React = require('react'),
 
 var currentQuestionController = function(props) {
 	var pervious = {
-		value: 'Pervious',
+		value: 'Previous',
 		display: false,
 		link: -1
 	}

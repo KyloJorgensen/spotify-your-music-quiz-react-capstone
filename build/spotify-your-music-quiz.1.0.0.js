@@ -30441,7 +30441,7 @@
 	
 	var currentQuestionController = function currentQuestionController(props) {
 		var pervious = {
-			value: 'Pervious',
+			value: 'Previous',
 			display: false,
 			link: -1
 		};
