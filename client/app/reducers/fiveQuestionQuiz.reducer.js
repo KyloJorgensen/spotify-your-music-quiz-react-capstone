@@ -14,7 +14,7 @@ var fiveQuestionQuizReducer = function(state, action) {
     	state.currentQuestion = 1;
         state.tracks = action.tracks;
     } else if (action.type === actions.GET_TRACKS_ERROR) {
-        if (action.error.message = "to tracks") {
+        if (action.error.message == "no tracks") {
             alert("you have no music on you spoifty the game will not work. sorry");
         }
     } else if (action.type === actions.CHANGE_CURRENT_QUESTION) {
